@@ -1,7 +1,9 @@
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
+#ifndef _INDIELIB_EDITOR_MAINWINDOW_H
+#define _INDIELIB_EDITOR_MAINWINDOW_H
 
 #include <QMainWindow>
+#include "elementpanel.h"
+#include "hierarchypanel.h"
 
 class MainWindow : public QMainWindow
 {
@@ -10,6 +12,10 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = 0);
     ~MainWindow();
+
+private:
+    ElementPanel* m_elementPanel;
+    HierarchyPanel* m_hierarchyPanel;
 };
 
-#endif // MAINWINDOW_H
+#endif // _INDIELIB_EDITOR_MAINWINDOW_H

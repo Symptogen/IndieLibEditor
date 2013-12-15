@@ -15,6 +15,10 @@ DEPENDPATH += . tinyxml
 INCLUDEPATH += . tinyxml
 
 SOURCES += src/main.cpp\
-        src/mainwindow.cpp
+        src/mainwindow.cpp \
+    src/elementpanel.cpp \
+    src/hierarchypanel.cpp
 
-HEADERS  += src/mainwindow.h
+HEADERS  += src/mainwindow.h \
+    src/elementpanel.h \
+    src/hierarchypanel.h
