@@ -29,7 +29,13 @@ public:
     void initDockWidgets();
     void initStatusBar();
     void initMenu();
+    void initActions();
     void closeEvent(QCloseEvent *event);
+
+private slots:
+    void loadLevel();
+    void newLevel();
+    void saveLevel();
 
 private:
     ElementPanel* m_elementPanel;
@@ -42,6 +48,13 @@ private:
 
     //Menus
     QMenu* m_fileMenu;
+    QMenu* m_aboutMenu;
+
+    //Actions
+    QAction* m_newLevelAction;
+    QAction* m_loadLevelAction;
+    QAction* m_saveLevelAction;
+    QAction* m_quitAction;
 };
 
 #endif // _INDIELIB_EDITOR_MAINWINDOW_H

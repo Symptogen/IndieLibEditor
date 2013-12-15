@@ -20,6 +20,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     this->initDockWidgets();
     this->initStatusBar();
+    this->initActions();
     this->initMenu();
 }
 
@@ -74,8 +75,58 @@ void MainWindow::initStatusBar(){
 
 //!Function that set up the menu and the actions that are contained into it
 void MainWindow::initMenu(){
+
+    //File menu
      m_fileMenu = this->menuBar()->addMenu(this->tr("&File"));
-     //m_fileMenu->addAction(m_newLevelAction);
-     //TODO
+     m_fileMenu->addAction(m_newLevelAction);
+     m_fileMenu->addSeparator();
+     m_fileMenu->addAction(m_loadLevelAction);
+     m_fileMenu->addAction(m_saveLevelAction);
+     m_fileMenu->addSeparator();
+     m_fileMenu->addAction(m_quitAction);
+
+     //About Menu
+     m_aboutMenu = this->menuBar()->addMenu(this->tr("&About"));
+
+}
+
+//!Create the actions that are used in the MainWindow menu
+void MainWindow::initActions(){
+
+    //New level
+    m_newLevelAction = new QAction(this->tr("New Level"), this);
+    m_newLevelAction->setShortcut(QKeySequence::New);
+    m_newLevelAction->setStatusTip(this->tr("Create a new empty project"));
+    this->connect(m_newLevelAction, SIGNAL(triggered()), this, SLOT(newLevel()));
+
+    //Load level
+    m_loadLevelAction = new QAction(this->tr("Load Level"), this);
+    m_loadLevelAction->setShortcut(QKeySequence::Open);
+    m_loadLevelAction->setStatusTip(this->tr("Open a project and load the level"));
+    this->connect(m_loadLevelAction, SIGNAL(triggered()), this, SLOT(loadLevel()));
+
+    //Save level
+    m_saveLevelAction = new QAction(this->tr("Save Level"), this);
+    m_saveLevelAction->setShortcut(QKeySequence::Save);
+    m_saveLevelAction->setStatusTip(this->tr("Save the current level"));
+    this->connect(m_saveLevelAction, SIGNAL(triggered()), this, SLOT(saveLevel()));
+
+    //Quit
+    m_quitAction = new QAction(this->tr("Quit"), this);
+    m_quitAction->setShortcut(QKeySequence::Quit);
+    m_quitAction->setStatusTip(this->tr("Close the editor"));
+    this->connect(m_quitAction, SIGNAL(triggered()), this, SLOT(closeEvent()));
+}
+
+void MainWindow::loadLevel(){
+
+}
+
+void MainWindow::saveLevel(){
+
+
+}
+
+void MainWindow::newLevel(){
 
 }
