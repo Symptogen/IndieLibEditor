@@ -1,17 +1,17 @@
 //! Part of the IndieLib Level Editor
-/*!\file hierarchypanel.h
+/*!\file elementpanel.h
  *\author Cecilia
  *\date 15-12-2013
  *\todo
- *\sa ElementPanel
+ *\sa HierarchyPanel
 */
 
 #ifndef _INDIELIB_EDITOR_ELEMENTPANEL_H
 #define _INDIELIB_EDITOR_ELEMENTPANEL_H
 
-#include <QWidget>
+#include <QStackedWidget>
 
-class ElementPanel : public QWidget
+class ElementPanel : public QStackedWidget
 {
     Q_OBJECT
 public:
