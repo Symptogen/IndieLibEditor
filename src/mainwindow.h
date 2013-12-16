@@ -18,6 +18,7 @@
 #include "hierarchypanel.h"
 #include "viewer.h"
 #include "project.h"
+#include "dialog/newprojectdialog.h"
 
 class MainWindow : public QMainWindow
 {
@@ -45,6 +46,7 @@ private:
     HierarchyPanel* m_hierarchyPanel;
     Viewer* m_viewer;
     Project* m_project;
+    NewProjectDialog* m_wizard;
 
     QDockWidget* m_elementDock;
     QDockWidget* m_hierarchyDock;

@@ -25,6 +25,10 @@ public:
     
     void createMainPage();
     void createLayerPage();
+    QString getResourcesPath();
+    QString getSavePath();
+    QString getProjectName();
+    QStringList getLayerList();
 
 signals:
     

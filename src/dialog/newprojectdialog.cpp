@@ -176,3 +176,20 @@ void NewProjectDialog::restoreDefault(){
 void NewProjectDialog::selected(QModelIndex index){
     m_selection = index;
 }
+
+//----------------- GETTER ----------------------- //
+QString NewProjectDialog::getResourcesPath(){
+    return m_projectResourcesPathLineEdit->text();
+}
+
+QString NewProjectDialog::getSavePath(){
+    return m_projectSavePathLineEdit->text();
+}
+
+QString NewProjectDialog::getProjectName(){
+    return m_projectNameLineEdit->text();
+}
+
+QStringList NewProjectDialog::getLayerList(){
+    return m_listModel->stringList();
+}

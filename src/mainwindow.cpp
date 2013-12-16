@@ -5,7 +5,6 @@
 */
 
 #include "mainwindow.h"
-#include "dialog/newprojectdialog.h"
 #include <QStatusBar>
 #include <QMenuBar>
 #include <QSettings>
@@ -136,6 +135,13 @@ void MainWindow::initActions(){
     m_quitAction->setShortcut(QKeySequence::Quit);
     m_quitAction->setStatusTip(this->tr("Close the editor"));
     this->connect(m_quitAction, SIGNAL(triggered()), this, SLOT(close()));
+
+    //Specifications for before the project creation
+    if(m_project == NULL){
+        m_newLevelAction->setEnabled(false);
+        m_loadLevelAction->setEnabled(false);
+        m_saveAllAction->setEnabled(false);
+    }
 }
 //------------------------- SLOTS ----------------------------- //
 //!Show a dialog for the creation of a new project
@@ -170,12 +176,18 @@ void MainWindow::newProject(){
     }
 
     //Show a custom dialog for the project creation
-    QWizard* wizard = new NewProjectDialog();
-    wizard->show();
+    NewProjectDialog* m_wizard = new NewProjectDialog();
+    int returnValue = m_wizard->exec();
 
-    //Retrieve the data from the dialog and create the project
-    //m_project = Project();
-    //this->initDockWidgets();
+    //Update the main window if the dialog succeded
+    if (returnValue == 1){
+        m_project = new Project(m_wizard->getProjectName(), m_wizard->getSavePath(), m_wizard->getResourcesPath(), m_wizard->getLayerList());
+        this->initDockWidgets();
+        //Updating the actions now a project has been created
+        m_newLevelAction->setEnabled(true);
+        m_loadLevelAction->setEnabled(true);
+        m_saveAllAction->setEnabled(true);
+    }
 }
 
 //! Show a dialog to choose a project file and load it
@@ -198,3 +210,4 @@ void MainWindow::saveAll(){
 void MainWindow::newLevel(){
 
 }
+

@@ -12,19 +12,20 @@
 
 #include <QString>
 #include <QHash>
+#include <QStringList>
 #include "level.h"
 
 class Project
 {
 public:
-    Project(QString name, QString savePath, QString resourcePath, QList<QString> layerList);
+    Project(QString name, QString savePath, QString resourcePath, QStringList layerList);
 
     //void addLayerItem(QString name, int pos);
 
     //---------- Getter / Setter----------- //
     void setResourcesPath(QString path){m_resourcesPath = path;}
     QHash<QString, Level> getLevelList(){return m_levelList;}
-    QList<QString> getLayerList(){return m_layerList;}
+    QStringList getLayerList(){return m_layerList;}
     QString getSavePath(){return m_savePath;}
     QString getName(){return m_name;}
     QString getResourcesPath(){return m_resourcesPath;}
@@ -34,7 +35,7 @@ private:
     QString m_savePath;
     QString m_resourcesPath;
     QHash<QString, Level> m_levelList;
-    QList<QString> m_layerList;
+    QStringList m_layerList;
 
 };
 
