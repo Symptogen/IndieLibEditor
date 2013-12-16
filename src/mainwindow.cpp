@@ -5,20 +5,26 @@
 */
 
 #include "mainwindow.h"
+#include "dialog/newprojectdialog.h"
 #include <QStatusBar>
 #include <QMenuBar>
 #include <QSettings>
+#include <QMessageBox>
+
+#include <QDebug>
+
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
 {
+
+    m_project = NULL;
 
     //Restore the previous geometry
     QSettings settings("Symptogene Team", "Level Editor");
     restoreGeometry(settings.value("geometry").toByteArray());
     //restoreState(settings.value("state").toByteArray());
 
-    this->initDockWidgets();
     this->initStatusBar();
     this->initActions();
     this->initMenu();
@@ -78,10 +84,14 @@ void MainWindow::initMenu(){
 
     //File menu
      m_fileMenu = this->menuBar()->addMenu(this->tr("&File"));
-     m_fileMenu->addAction(m_newLevelAction);
+     m_fileMenu->addAction(m_newProjectAction);
+     m_fileMenu->addAction(m_openProjectAction);
      m_fileMenu->addSeparator();
+     m_fileMenu->addSeparator();
+     m_fileMenu->addAction(m_newLevelAction);
      m_fileMenu->addAction(m_loadLevelAction);
-     m_fileMenu->addAction(m_saveLevelAction);
+     m_fileMenu->addSeparator();
+     m_fileMenu->addAction(m_saveAllAction);
      m_fileMenu->addSeparator();
      m_fileMenu->addAction(m_quitAction);
 
@@ -93,6 +103,16 @@ void MainWindow::initMenu(){
 //!Create the actions that are used in the MainWindow menu
 void MainWindow::initActions(){
 
+    //New Project
+    m_newProjectAction = new QAction(this->tr("New Project"), this);
+    m_newProjectAction->setStatusTip(this->tr("Create a new empty project"));
+    this->connect(m_newProjectAction, SIGNAL(triggered()), this, SLOT(newProject()));
+
+    //New Project
+    m_openProjectAction = new QAction(this->tr("Open Project"), this);
+    m_openProjectAction->setStatusTip(this->tr("Create a new empty project"));
+    this->connect(m_openProjectAction, SIGNAL(triggered()), this, SLOT(openProject()));
+
     //New level
     m_newLevelAction = new QAction(this->tr("New Level"), this);
     m_newLevelAction->setShortcut(QKeySequence::New);
@@ -101,28 +121,76 @@ void MainWindow::initActions(){
 
     //Load level
     m_loadLevelAction = new QAction(this->tr("Load Level"), this);
-    m_loadLevelAction->setShortcut(QKeySequence::Open);
-    m_loadLevelAction->setStatusTip(this->tr("Open a project and load the level"));
+    m_newLevelAction->setShortcut(QKeySequence::Open);
+    m_loadLevelAction->setStatusTip(this->tr("Load a level from the current project"));
     this->connect(m_loadLevelAction, SIGNAL(triggered()), this, SLOT(loadLevel()));
 
     //Save level
-    m_saveLevelAction = new QAction(this->tr("Save Level"), this);
-    m_saveLevelAction->setShortcut(QKeySequence::Save);
-    m_saveLevelAction->setStatusTip(this->tr("Save the current level"));
-    this->connect(m_saveLevelAction, SIGNAL(triggered()), this, SLOT(saveLevel()));
+    m_saveAllAction = new QAction(this->tr("Save All"), this);
+    m_saveAllAction->setShortcut(QKeySequence::Save);
+    m_saveAllAction->setStatusTip(this->tr("Save the current level and the project"));
+    this->connect(m_saveAllAction, SIGNAL(triggered()), this, SLOT(saveAll()));
 
     //Quit
     m_quitAction = new QAction(this->tr("Quit"), this);
     m_quitAction->setShortcut(QKeySequence::Quit);
     m_quitAction->setStatusTip(this->tr("Close the editor"));
-    this->connect(m_quitAction, SIGNAL(triggered()), this, SLOT(closeEvent()));
+    this->connect(m_quitAction, SIGNAL(triggered()), this, SLOT(close()));
+}
+//------------------------- SLOTS ----------------------------- //
+//!Show a dialog for the creation of a new project
+void MainWindow::newProject(){
+
+    //If a current project is open then we close it, before we ask the user what he want to do
+    if (m_project != NULL){
+        QMessageBox msgBox;
+        msgBox.setText("The project and the level have been modified.");
+        msgBox.setInformativeText("Do you want to save your changes?");
+        msgBox.setStandardButtons(QMessageBox::Save | QMessageBox::Discard | QMessageBox::Cancel);
+        msgBox.setDefaultButton(QMessageBox::Save);
+        int ret = msgBox.exec();
+
+        switch (ret) {
+           case QMessageBox::Save:
+               // Save was clicked
+               qDebug() << "Save" ;
+               break;
+           case QMessageBox::Discard:
+               // Don't Save was clicked
+               qDebug() << "Discard" ;
+               break;
+           case QMessageBox::Cancel:
+               // Cancel was clicked
+               qDebug() << "Cancel" ;
+               break;
+           default:
+               // should never be reached
+               break;
+         }
+    }
+
+    //Show a custom dialog for the project creation
+    QWizard* wizard = new NewProjectDialog();
+    wizard->show();
+
+    //Retrieve the data from the dialog and create the project
+    //m_project = Project();
+    //this->initDockWidgets();
+}
+
+//! Show a dialog to choose a project file and load it
+void MainWindow::openProject(){
+
+    //project = Project()
+
+    //this->initDockWidgets();
 }
 
 void MainWindow::loadLevel(){
 
 }
 
-void MainWindow::saveLevel(){
+void MainWindow::saveAll(){
 
 
 }

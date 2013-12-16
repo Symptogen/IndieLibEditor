@@ -17,6 +17,7 @@
 #include "elementpanel.h"
 #include "hierarchypanel.h"
 #include "viewer.h"
+#include "project.h"
 
 class MainWindow : public QMainWindow
 {
@@ -32,15 +33,18 @@ public:
     void initActions();
     void closeEvent(QCloseEvent *event);
 
-private slots:
+public slots:
+    void newProject();
+    void openProject();
     void loadLevel();
     void newLevel();
-    void saveLevel();
+    void saveAll();
 
 private:
     ElementPanel* m_elementPanel;
     HierarchyPanel* m_hierarchyPanel;
     Viewer* m_viewer;
+    Project* m_project;
 
     QDockWidget* m_elementDock;
     QDockWidget* m_hierarchyDock;
@@ -51,9 +55,11 @@ private:
     QMenu* m_aboutMenu;
 
     //Actions
+    QAction* m_newProjectAction;
+    QAction* m_openProjectAction;
     QAction* m_newLevelAction;
     QAction* m_loadLevelAction;
-    QAction* m_saveLevelAction;
+    QAction* m_saveAllAction;
     QAction* m_quitAction;
 };
 
