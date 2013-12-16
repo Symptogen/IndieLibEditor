@@ -21,10 +21,11 @@ public:
     Project(QString name, QString savePath, QString resourcePath, QStringList layerList);
 
     //void addLayerItem(QString name, int pos);
+    void addLevel(QString name, Level* level);
 
     //---------- Getter / Setter----------- //
     void setResourcesPath(QString path){m_resourcesPath = path;}
-    QHash<QString, Level> getLevelList(){return m_levelList;}
+    QHash<QString, Level*> getLevelList(){return m_levelList;}
     QStringList getLayerList(){return m_layerList;}
     QString getSavePath(){return m_savePath;}
     QString getName(){return m_name;}
@@ -34,7 +35,7 @@ private:
     QString m_name;
     QString m_savePath;
     QString m_resourcesPath;
-    QHash<QString, Level> m_levelList;
+    QHash<QString, Level*> m_levelList;
     QStringList m_layerList;
 
 };

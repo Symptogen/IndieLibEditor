@@ -102,6 +102,8 @@ void MainWindow::initMenu(){
 //!Create the actions that are used in the MainWindow menu
 void MainWindow::initActions(){
 
+    //---------------- FILE MENU ACTION ---------------------------- //
+
     //New Project
     m_newProjectAction = new QAction(this->tr("New Project"), this);
     m_newProjectAction->setStatusTip(this->tr("Create a new empty project"));
@@ -142,6 +144,14 @@ void MainWindow::initActions(){
         m_loadLevelAction->setEnabled(false);
         m_saveAllAction->setEnabled(false);
     }
+
+    //---------------- FILE MENU ACTION ---------------------------- //
+
+    //Project options
+    m_projectOptionsAction = new QAction(this->tr("Project Options"), this);
+    m_projectOptionsAction->setStatusTip(this->tr("Open a dialog with the main project properties"));
+    this->connect(m_projectOptionsAction, SIGNAL(triggered()), this, SLOT(projectOptions()));
+
 }
 //------------------------- SLOTS ----------------------------- //
 //!Show a dialog for the creation of a new project
@@ -182,20 +192,15 @@ void MainWindow::newProject(){
     //Update the main window if the dialog succeded
     if (returnValue == 1){
         m_project = new Project(m_wizard->getProjectName(), m_wizard->getSavePath(), m_wizard->getResourcesPath(), m_wizard->getLayerList());
-        this->initDockWidgets();
         //Updating the actions now a project has been created
         m_newLevelAction->setEnabled(true);
-        m_loadLevelAction->setEnabled(true);
         m_saveAllAction->setEnabled(true);
     }
 }
 
 //! Show a dialog to choose a project file and load it
 void MainWindow::openProject(){
-
-    //project = Project()
-
-    //this->initDockWidgets();
+    //TODO
 }
 
 void MainWindow::loadLevel(){
@@ -206,8 +211,13 @@ void MainWindow::saveAll(){
 
 
 }
-
+//!This function creates a level within the project context and set the main window ready to work
 void MainWindow::newLevel(){
 
+    //TODO : open a dialog the level name (+ autre chose ?)
+
+    Level* level = new Level();
+    m_project->addLevel(level->getName(), level);
+    this->initDockWidgets();
 }
 

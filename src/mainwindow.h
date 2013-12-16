@@ -40,6 +40,7 @@ public slots:
     void loadLevel();
     void newLevel();
     void saveAll();
+    void projectOptions();
 
 private:
     ElementPanel* m_elementPanel;
@@ -63,6 +64,7 @@ private:
     QAction* m_loadLevelAction;
     QAction* m_saveAllAction;
     QAction* m_quitAction;
+    QAction* m_projectOptionsAction;
 };
 
 #endif // _INDIELIB_EDITOR_MAINWINDOW_H
