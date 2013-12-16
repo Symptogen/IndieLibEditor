@@ -9,6 +9,7 @@
 #include <QMenuBar>
 #include <QSettings>
 #include <QMessageBox>
+#include <QInputDialog>
 
 #include <QDebug>
 
@@ -61,8 +62,9 @@ void MainWindow::initDockWidgets(){
     m_elementDock->setFeatures(QDockWidget::DockWidgetMovable | QDockWidget::DockWidgetClosable);
 
     //Viewer Widget
-    m_viewer = new Viewer();
-    m_viewerDock = new QDockWidget(this->tr("Viewer"), this);
+    m_scene = new Scene(m_project->getLayerList(), this);
+    m_viewer = new Viewer(m_scene, this);
+    m_viewerDock = new QDockWidget(this->tr(m_project->getName().toLocal8Bit() + " - " + m_project->getCurrentLevel()->getName().toLocal8Bit()), this);
     m_viewerDock->setAllowedAreas(Qt::LeftDockWidgetArea);
     m_viewerDock->setWidget(m_viewer);
     m_viewerDock->setFeatures(QDockWidget::DockWidgetMovable | QDockWidget::DockWidgetClosable);
@@ -214,10 +216,22 @@ void MainWindow::saveAll(){
 //!This function creates a level within the project context and set the main window ready to work
 void MainWindow::newLevel(){
 
-    //TODO : open a dialog the level name (+ autre chose ?)
+    //Open a dialog for the user to choose the level name
+    bool ok;
+    QString text = QInputDialog::getText(this, tr("New Level"),
+                                         tr("Level name:"), QLineEdit::Normal,
+                                         "Level_1", &ok);
+    //Create a Level with the given name
+    if (ok && !text.isEmpty()){
+        Level* level = new Level(text);
+        m_project->addLevel(text, level);
+        m_project->setCurrentLevel(level);
+        this->initDockWidgets();
+    }
+}
 
-    Level* level = new Level();
-    m_project->addLevel(level->getName(), level);
-    this->initDockWidgets();
+//! Shows up a dialog to expose the project properties and to change them if need.
+void MainWindow::projectOptions(){
+    //TODO
 }
 

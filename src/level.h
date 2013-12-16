@@ -14,8 +14,12 @@
 class Level
 {
 public:
-    Level();
+    Level(QString name);
 
+    //--------- Getter / Setter ------------- //
+    QString getName(){return m_name;}
+
+private:
     QString m_name;
 };
 

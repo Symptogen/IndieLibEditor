@@ -21,7 +21,8 @@ SOURCES += src/main.cpp\
     src/viewer.cpp \
     src/project.cpp \
     src/level.cpp \
-    src/dialog/newprojectdialog.cpp
+    src/dialog/newprojectdialog.cpp \
+    src/graphics/scene.cpp
 
 HEADERS  += src/mainwindow.h \
     src/elementpanel.h \
@@ -29,4 +30,5 @@ HEADERS  += src/mainwindow.h \
     src/viewer.h \
     src/project.h \
     src/level.h \
-    src/dialog/newprojectdialog.h
+    src/dialog/newprojectdialog.h \
+    src/graphics/scene.h

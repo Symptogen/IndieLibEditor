@@ -25,11 +25,13 @@ public:
 
     //---------- Getter / Setter----------- //
     void setResourcesPath(QString path){m_resourcesPath = path;}
+    void setCurrentLevel(Level* level){m_currentLevel = level;}
     QHash<QString, Level*> getLevelList(){return m_levelList;}
     QStringList getLayerList(){return m_layerList;}
     QString getSavePath(){return m_savePath;}
     QString getName(){return m_name;}
     QString getResourcesPath(){return m_resourcesPath;}
+    Level* getCurrentLevel(){return m_currentLevel;}
 
 private:
     QString m_name;
@@ -37,6 +39,7 @@ private:
     QString m_resourcesPath;
     QHash<QString, Level*> m_levelList;
     QStringList m_layerList;
+    Level* m_currentLevel;
 
 };
 

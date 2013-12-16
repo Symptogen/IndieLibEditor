@@ -6,6 +6,7 @@
 
 #include "level.h"
 
-Level::Level()
+Level::Level(QString name):
+    m_name(name)
 {
 }

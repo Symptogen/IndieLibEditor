@@ -8,12 +8,12 @@
 #ifndef VIEWER_H
 #define VIEWER_H
 
-#include <QWidget>
+#include <QGraphicsView>
 
-class Viewer : public QWidget
+class Viewer : public QGraphicsView
 {
 public:
-    Viewer();
+    Viewer(QGraphicsScene * scene, QWidget * parent = 0);
 };
 
 #endif // VIEWER_H

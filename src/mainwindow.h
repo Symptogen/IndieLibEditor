@@ -17,6 +17,7 @@
 #include "elementpanel.h"
 #include "hierarchypanel.h"
 #include "viewer.h"
+#include "graphics/scene.h"
 #include "project.h"
 #include "dialog/newprojectdialog.h"
 
@@ -46,6 +47,7 @@ private:
     ElementPanel* m_elementPanel;
     HierarchyPanel* m_hierarchyPanel;
     Viewer* m_viewer;
+    Scene* m_scene;
     Project* m_project;
     NewProjectDialog* m_wizard;
 

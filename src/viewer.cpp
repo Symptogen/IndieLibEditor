@@ -7,8 +7,10 @@
 
 #include "viewer.h"
 
-Viewer::Viewer()
+Viewer::Viewer(QGraphicsScene * scene, QWidget * parent):
+    QGraphicsView(parent)
 {
+    this->setScene(scene);
     this->setMinimumWidth(400);
     this->setMinimumHeight(400);
 }

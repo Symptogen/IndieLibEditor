@@ -10,7 +10,6 @@
 Project::Project(QString name, QString savePath, QString resourcePath, QStringList layerList)
     : m_name(name), m_savePath(savePath), m_resourcesPath(resourcePath), m_layerList(layerList)
 {
-    qDebug() << "patafoin";
 }
 
 //! Add a new level to the list of levels
