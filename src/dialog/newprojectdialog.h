@@ -11,7 +11,11 @@
 
 #include <QWizard>
 #include <QLabel>
+#include <QPushButton>
 #include <QLineEdit>
+#include <QListView>
+#include <QStringListModel>
+#include <QModelIndex>
 
 class NewProjectDialog : public QWizard
 {
@@ -25,14 +29,41 @@ public:
 signals:
     
 public slots:
+    void browseDialog();
+    void addEntry();
+    void clearList();
+    void removeItem();
+    void restoreDefault();
+    void selected(QModelIndex index);
 
 private:
     QWizardPage* m_mainPage;
     QWizardPage* m_layerPage;
 
+    //Layer page
+    QListView* m_listView;
+    QStringListModel* m_listModel;
+    QStringList* m_defaultLayerList;
+    QLineEdit* m_layerLineEdit;
+    QPushButton* m_addEntryButton;
+    QPushButton* m_clearAllButton;
+    QPushButton* m_removeItemButton;
+    QPushButton* m_restoreDefaultListButton;
+    QModelIndex m_selection;
+
     //Name
     QLabel* m_projectNameLabel;
     QLineEdit* m_projectNameLineEdit;
+
+    //Location
+    QLabel* m_projectSavePathLabel;
+    QLineEdit* m_projectSavePathLineEdit;
+    QPushButton* m_browseSave;
+
+    //Resources
+    QLabel* m_projectResourcesPathLabel;
+    QLineEdit* m_projectResourcesPathLineEdit;
+    QPushButton* m_browseResources;
     
 };
 
