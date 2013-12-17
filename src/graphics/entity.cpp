@@ -10,9 +10,10 @@
 #include <QGraphicsScene>
 #include <QGraphicsSceneMouseEvent>
 
-Entity::Entity(QPixmap pixmap)
+Entity::Entity(QString name, QPixmap pixmap)
 {
     enum { Type = UserType + 1 };
+    this->setName(name);
     this->setPixmap(pixmap);
     this->acceptHoverEvents();
     this->setFlags(QGraphicsItem::ItemIsMovable | QGraphicsItem::ItemIsSelectable | QGraphicsItem::ItemIsFocusable | QGraphicsItem::ItemSendsGeometryChanges);
@@ -33,3 +34,4 @@ QVariant Entity::itemChange(GraphicsItemChange change, const QVariant &value){
 
     return QGraphicsItem::itemChange(change, value);
 }
+

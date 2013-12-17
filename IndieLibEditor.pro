@@ -26,7 +26,9 @@ SOURCES += src/main.cpp\
     src/graphics/entity.cpp \
     src/graphics/background.cpp \
     src/commands/movecommand.cpp \
-    src/commands/invoker.cpp
+    src/commands/invoker.cpp \
+    src/commands/opacitycommand.cpp \
+    src/entityelementpanel.cpp
 
 HEADERS  += src/mainwindow.h \
     src/elementpanel.h \
@@ -39,4 +41,6 @@ HEADERS  += src/mainwindow.h \
     src/graphics/entity.h \
     src/graphics/background.h \
     src/commands/movecommand.h \
-    src/commands/invoker.h
+    src/commands/invoker.h \
+    src/commands/opacitycommand.h \
+    src/entityelementpanel.h

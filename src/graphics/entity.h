@@ -14,7 +14,7 @@
 class Entity : public QGraphicsPixmapItem
 {
 public:
-    Entity(QPixmap pixmap);
+    Entity(QString name, QPixmap pixmap);
 
     //-------------- Event Handlers ---------------- //
     void mousePressEvent(QGraphicsSceneMouseEvent *event);
@@ -23,9 +23,12 @@ public:
     //----------- Getter /Setter ---------------- //
     void setScene(Scene* scene){m_scene = scene;}
     Scene* getScene(){return m_scene;}
+    QString name(){return m_name;}
+    void setName(QString name){m_name = name;}
 
 private:
      QPointF m_oldPos;
      Scene* m_scene;
+     QString m_name;
 };
 #endif // ENTITY_H

@@ -1,3 +1,10 @@
+//! Part of the IndieLib Level Editor
+/*!\file movecommand.cpp
+ *\author Cecilia
+ *\date 17-12-2013
+ *\todo
+*/
+
 #include "movecommand.h"
 #include <QGraphicsScene>
 #include <QDebug>
@@ -21,12 +28,12 @@ void MoveCommand::undo()
 
 void MoveCommand::redo()
  {
-    qDebug() << "redo : new Pos = " << m_newPos ;
+    qDebug() << "redo " ;
     m_graphicsItem->setPos(m_newPos);
     setText(QObject::tr("Move"));
  }
 
-bool MoveCommand::mergeWith(const QUndoCommand *command)
+/*bool MoveCommand::mergeWith(const QUndoCommand *command)
  {
      const MoveCommand *moveCommand = static_cast<const MoveCommand *>(command);
      QGraphicsItem *item = moveCommand->m_graphicsItem;
@@ -38,5 +45,5 @@ bool MoveCommand::mergeWith(const QUndoCommand *command)
      setText(QObject::tr("Move %1"));
 
      return true;
- }
+ }*/
 

@@ -3,6 +3,7 @@
 
 #include <QUndoStack>
 #include "movecommand.h"
+#include "opacitycommand.h"
 
 class Invoker
 {
@@ -11,6 +12,7 @@ public:
 
 public slots:
     void itemMoved(QGraphicsItem *movedItem, const QPointF &oldPosition);
+    void opacityChanged(QGraphicsItem *item, const int &oldOpacity);
 
     QUndoStack* getStack(){return m_undoStack;}
 

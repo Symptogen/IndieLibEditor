@@ -35,6 +35,7 @@ public:
     void initMenu();
     void initActions();
     void closeEvent(QCloseEvent *event);
+    void setFinalCreationStep();
 
 public slots:
     void newProject();

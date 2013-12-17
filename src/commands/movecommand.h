@@ -1,3 +1,9 @@
+//! Part of the IndieLib Level Editor
+/*!\file movecommand.h
+ *\author Cecilia
+ *\date 17-12-2013
+ *\todo
+*/
 #ifndef MOVECOMMAND_H
 #define MOVECOMMAND_H
 
@@ -12,7 +18,7 @@ public:
     MoveCommand(QGraphicsItem *diagramItem, const QPointF &oldPos,QUndoCommand *parent = 0);
     void undo();
     void redo();
-    bool mergeWith(const QUndoCommand *command);
+    //bool mergeWith(const QUndoCommand *command);
     int id() const { return Id; }
 
 

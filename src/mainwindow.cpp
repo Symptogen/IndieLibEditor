@@ -10,6 +10,7 @@
 #include <QSettings>
 #include <QMessageBox>
 #include <QInputDialog>
+#include <QVBoxLayout>
 
 #include <QDebug>
 
@@ -31,6 +32,7 @@ MainWindow::MainWindow(QWidget *parent)
     this->initStatusBar();
     this->initActions();
     this->initMenu();
+    this->initDockWidgets();
 }
 
 MainWindow::~MainWindow()
@@ -65,13 +67,11 @@ void MainWindow::initDockWidgets(){
     m_elementDock->setFeatures(QDockWidget::DockWidgetMovable | QDockWidget::DockWidgetClosable);
 
     //Viewer Widget
-    m_scene = new Scene(m_project->getLayerList(), this);
-    m_scene->setInvoker(m_invoker);
-    m_viewer = new Viewer(m_scene, this);
-    m_viewerDock = new QDockWidget(this->tr(m_project->getName().toLocal8Bit() + " - " + m_project->getCurrentLevel()->getName().toLocal8Bit()), this);
+    m_viewer = new Viewer();
+    m_viewerDock = new QDockWidget(this->tr(""), this);
     m_viewerDock->setAllowedAreas(Qt::LeftDockWidgetArea);
     m_viewerDock->setWidget(m_viewer);
-    m_viewerDock->setFeatures(QDockWidget::DockWidgetMovable | QDockWidget::DockWidgetClosable);
+    m_viewerDock->setFeatures(QDockWidget::NoDockWidgetFeatures);
 
     //Add the dock to the main window
     this->addDockWidget(Qt::LeftDockWidgetArea, m_viewerDock);
@@ -247,9 +247,32 @@ void MainWindow::newLevel(){
         Level* level = new Level(text);
         m_project->addLevel(text, level);
         m_project->setCurrentLevel(level);
-        this->initDockWidgets();
+
+        this->setFinalCreationStep();
+
     }
 }
+
+//! When a level is created, we can set  the final steps for the window creation and connect widgets between one another
+void MainWindow::setFinalCreationStep(){
+
+    //Scene creation and connection with the element panel
+    m_scene = new Scene(m_project->getLayerList(), this);
+    m_scene->setInvoker(m_invoker);
+    m_elementPanel->setScene(m_scene);
+    bool value = QObject::connect(m_scene, SIGNAL(newEntityAdded(Entity*)), m_elementPanel, SLOT(newEntity(Entity*)));
+    qDebug() << "connection : " << value;
+
+    //Init the viewer with a proper title
+    QWidget* titleBar = new QWidget();
+    QVBoxLayout* layout = new QVBoxLayout();
+    QLabel* label = new QLabel(m_project->getName().toLocal8Bit() + m_project->getCurrentLevel()->getName().toLocal8Bit());
+    layout->addWidget(label);
+    titleBar->setLayout(layout);
+    m_viewerDock->setTitleBarWidget(titleBar);
+    m_viewer->initView(m_scene, this);
+}
+
 
 //! Shows up a dialog to expose the project properties and to change them if need.
 void MainWindow::projectOptions(){
