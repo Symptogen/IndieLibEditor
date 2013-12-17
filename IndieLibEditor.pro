@@ -24,7 +24,9 @@ SOURCES += src/main.cpp\
     src/dialog/newprojectdialog.cpp \
     src/graphics/scene.cpp \
     src/graphics/entity.cpp \
-    src/graphics/background.cpp
+    src/graphics/background.cpp \
+    src/commands/movecommand.cpp \
+    src/commands/invoker.cpp
 
 HEADERS  += src/mainwindow.h \
     src/elementpanel.h \
@@ -35,4 +37,6 @@ HEADERS  += src/mainwindow.h \
     src/dialog/newprojectdialog.h \
     src/graphics/scene.h \
     src/graphics/entity.h \
-    src/graphics/background.h
+    src/graphics/background.h \
+    src/commands/movecommand.h \
+    src/commands/invoker.h
