@@ -9,6 +9,7 @@
 #define SCENE_H
 
 #include <QGraphicsScene>
+#include <QGraphicsSceneMouseEvent>
 
 class Scene : public QGraphicsScene
 {
@@ -17,9 +18,14 @@ public:
 
     void createLayer(QString name);
     QGraphicsItemGroup* getGroup(QString name);
+    void setBackground(QString path);
+
+    // --------------- Event Handlers ------------------- //
+    //void mousePressEvent(QGraphicsSceneMouseEvent *event);
 
 private:
     QHash<QString, QGraphicsItemGroup*> m_itemGroupsList;
+
 
 
 };

@@ -22,7 +22,9 @@ SOURCES += src/main.cpp\
     src/project.cpp \
     src/level.cpp \
     src/dialog/newprojectdialog.cpp \
-    src/graphics/scene.cpp
+    src/graphics/scene.cpp \
+    src/graphics/entity.cpp \
+    src/graphics/background.cpp
 
 HEADERS  += src/mainwindow.h \
     src/elementpanel.h \
@@ -31,4 +33,6 @@ HEADERS  += src/mainwindow.h \
     src/project.h \
     src/level.h \
     src/dialog/newprojectdialog.h \
-    src/graphics/scene.h
+    src/graphics/scene.h \
+    src/graphics/entity.h \
+    src/graphics/background.h
