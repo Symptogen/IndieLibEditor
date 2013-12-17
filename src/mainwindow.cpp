@@ -25,6 +25,9 @@ MainWindow::MainWindow(QWidget *parent)
     restoreGeometry(settings.value("geometry").toByteArray());
     //restoreState(settings.value("state").toByteArray());
 
+    //Init the command pattern for the undo/redo
+    m_invoker = new Invoker();
+
     this->initStatusBar();
     this->initActions();
     this->initMenu();
@@ -63,6 +66,7 @@ void MainWindow::initDockWidgets(){
 
     //Viewer Widget
     m_scene = new Scene(m_project->getLayerList(), this);
+    m_scene->setInvoker(m_invoker);
     m_viewer = new Viewer(m_scene, this);
     m_viewerDock = new QDockWidget(this->tr(m_project->getName().toLocal8Bit() + " - " + m_project->getCurrentLevel()->getName().toLocal8Bit()), this);
     m_viewerDock->setAllowedAreas(Qt::LeftDockWidgetArea);
@@ -95,6 +99,15 @@ void MainWindow::initMenu(){
      m_fileMenu->addAction(m_saveAllAction);
      m_fileMenu->addSeparator();
      m_fileMenu->addAction(m_quitAction);
+
+     //Edit Menu
+     m_editMenu = this->menuBar()->addMenu(this->tr("&Edit"));
+     m_editMenu->addAction(m_undoAction);
+     m_editMenu->addAction(m_redoAction);
+
+     //Project Menu
+     m_projectMenu = this->menuBar()->addMenu(this->tr("&Project"));
+     m_projectMenu->addAction(m_projectOptionsAction);
 
      //About Menu
      m_aboutMenu = this->menuBar()->addMenu(this->tr("&About"));
@@ -147,12 +160,20 @@ void MainWindow::initActions(){
         m_saveAllAction->setEnabled(false);
     }
 
-    //---------------- FILE MENU ACTION ---------------------------- //
+    //---------------- PROJECT MENU ACTION ---------------------------- //
 
     //Project options
     m_projectOptionsAction = new QAction(this->tr("Project Options"), this);
     m_projectOptionsAction->setStatusTip(this->tr("Open a dialog with the main project properties"));
     this->connect(m_projectOptionsAction, SIGNAL(triggered()), this, SLOT(projectOptions()));
+
+    //---------------- EDIT MENU ACTION ---------------------------- //
+
+    m_undoAction = m_invoker->getStack()->createUndoAction(this, tr("&Undo"));
+    m_undoAction->setShortcuts(QKeySequence::Undo);
+
+    m_redoAction = m_invoker->getStack()->createRedoAction(this, tr("&Redo"));
+    m_redoAction->setShortcuts(QKeySequence::Redo);
 
 }
 //------------------------- SLOTS ----------------------------- //

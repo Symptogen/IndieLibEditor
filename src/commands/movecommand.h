@@ -7,11 +7,14 @@
 class MoveCommand : public QUndoCommand
 {
 public:
-    MoveCommand(QGraphicsItem *diagramItem, const QPointF &oldPos,
-                     QUndoCommand *parent = 0);
+    enum { Id = 1234 };
+
+    MoveCommand(QGraphicsItem *diagramItem, const QPointF &oldPos,QUndoCommand *parent = 0);
     void undo();
     void redo();
     bool mergeWith(const QUndoCommand *command);
+    int id() const { return Id; }
+
 
 private:
     QGraphicsItem* m_graphicsItem;

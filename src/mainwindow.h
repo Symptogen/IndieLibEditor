@@ -20,6 +20,7 @@
 #include "graphics/scene.h"
 #include "project.h"
 #include "dialog/newprojectdialog.h"
+#include "commands/invoker.h"
 
 class MainWindow : public QMainWindow
 {
@@ -49,6 +50,7 @@ private:
     Viewer* m_viewer;
     Scene* m_scene;
     Project* m_project;
+    Invoker* m_invoker;
     NewProjectDialog* m_wizard;
 
     QDockWidget* m_elementDock;
@@ -58,6 +60,8 @@ private:
     //Menus
     QMenu* m_fileMenu;
     QMenu* m_aboutMenu;
+    QMenu* m_editMenu;
+    QMenu* m_projectMenu;
 
     //Actions
     QAction* m_newProjectAction;
@@ -67,6 +71,8 @@ private:
     QAction* m_saveAllAction;
     QAction* m_quitAction;
     QAction* m_projectOptionsAction;
+    QAction* m_undoAction;
+    QAction* m_redoAction;
 };
 
 #endif // _INDIELIB_EDITOR_MAINWINDOW_H

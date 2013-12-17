@@ -10,6 +10,7 @@
 
 #include <QGraphicsScene>
 #include <QGraphicsSceneMouseEvent>
+#include "../commands/invoker.h"
 
 class Scene : public QGraphicsScene
 {
@@ -20,12 +21,13 @@ public:
     QGraphicsItemGroup* getGroup(QString name);
     void setBackground(QString path);
 
-    // --------------- Event Handlers ------------------- //
-    //void mousePressEvent(QGraphicsSceneMouseEvent *event);
+    //---------------- Getter / Setter ------------------ //
+    void setInvoker(Invoker* invoker){m_invoker = invoker;}
+    Invoker* invoker(){return m_invoker;}
 
 private:
     QHash<QString, QGraphicsItemGroup*> m_itemGroupsList;
-
+    Invoker* m_invoker;
 
 
 };

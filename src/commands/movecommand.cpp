@@ -1,8 +1,11 @@
 #include "movecommand.h"
+#include <QGraphicsScene>
+#include <QDebug>
 
 MoveCommand::MoveCommand(QGraphicsItem *diagramItem, const QPointF &oldPos, QUndoCommand *parent)
      : QUndoCommand(parent)
  {
+
      m_graphicsItem = diagramItem;
      m_newPos = diagramItem->pos();
      m_oldPos = oldPos;
@@ -10,15 +13,17 @@ MoveCommand::MoveCommand(QGraphicsItem *diagramItem, const QPointF &oldPos, QUnd
 
 void MoveCommand::undo()
  {
-     m_graphicsItem->setPos(m_oldPos);
-     m_graphicsItem->scene()->update();
-     setText(QObject::tr("Move %1").arg(createCommandString(m_graphicsItem, m_newPos)));
+    qDebug() << "undo " ;
+    m_graphicsItem->setPos(m_oldPos);
+    m_graphicsItem->scene()->update();
+    setText(QObject::tr("Move"));
  }
 
 void MoveCommand::redo()
  {
-     m_graphicsItem->setPos(m_newPos);
-     setText(QObject::tr("Move %1").arg(createCommandString(m_graphicsItem, m_newPos)));
+    qDebug() << "redo : new Pos = " << m_newPos ;
+    m_graphicsItem->setPos(m_newPos);
+    setText(QObject::tr("Move"));
  }
 
 bool MoveCommand::mergeWith(const QUndoCommand *command)
@@ -30,7 +35,8 @@ bool MoveCommand::mergeWith(const QUndoCommand *command)
      return false;
 
      m_newPos = item->pos();
-     setText(QObject::tr("Move %1").arg(createCommandString(m_graphicsItem, m_newPos)));
+     setText(QObject::tr("Move %1"));
 
      return true;
  }
+
