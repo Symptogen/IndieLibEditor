@@ -17,7 +17,6 @@ ElementPanel::ElementPanel()
     this->setMinimumWidth(200);
     this->setMaximumWidth(300);
     this->setMinimumHeight(300);
-
     m_entityStacked = new QStackedWidget();
     m_backgroundStacked = new QStackedWidget();
     this->addWidget(m_entityStacked);
@@ -38,7 +37,7 @@ void ElementPanel::initElementPanel(){
 
             //Creates an entity panel
             if(m_scene->items().at(i)->type() == QGraphicsItem::UserType + 1){
-                QWidget* widget = new EntityElementPanel(qgraphicsitem_cast<Entity*>(m_scene->items().at(i)));
+                QWidget* widget = new EntityElementPanel(qgraphicsitem_cast<Entity*>(m_scene->items().at(i)), m_scene);
                 this->m_entityStacked->addWidget(widget);
             }
             //creates a Background panel
@@ -55,7 +54,7 @@ void ElementPanel::newEntity(Entity* item){
     qDebug() << "new entity received in Element panel !";
     if(item->type() == QGraphicsItem::UserType + 1){
         qDebug() << "creation of the panel ...";
-        QWidget* widget = new EntityElementPanel(item);
+        QWidget* widget = new EntityElementPanel(item, m_scene);
         this->m_entityStacked->addWidget(widget);
         this->m_entityStacked->setCurrentWidget(widget);
     }

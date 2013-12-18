@@ -14,7 +14,9 @@
 class Entity : public QGraphicsPixmapItem
 {
 public:
+    enum { Type = UserType + 1 };
     Entity(QString name, QPixmap pixmap);
+    int type() const{return Type;}
 
     //-------------- Event Handlers ---------------- //
     void mousePressEvent(QGraphicsSceneMouseEvent *event);
@@ -28,6 +30,7 @@ public:
 
 private:
      QPointF m_oldPos;
+     qreal m_oldOpacity;
      Scene* m_scene;
      QString m_name;
 };

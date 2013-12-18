@@ -12,6 +12,7 @@
 #include <QStackedWidget>
 #include "graphics/entity.h"
 #include "graphics/scene.h"
+#include "commands/invoker.h"
 
 class ElementPanel : public QStackedWidget
 {
@@ -20,6 +21,7 @@ public:
     ElementPanel();
     void initElementPanel();
     void setScene(Scene* scene);
+    Scene* getScene(){return m_scene;}
 
 private slots:
     void newEntity(Entity* item);

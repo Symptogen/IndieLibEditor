@@ -14,7 +14,7 @@ void Invoker::itemMoved(QGraphicsItem *movedItem, const QPointF &oldPosition)
  }
 
 //! For a changement of opacity, store the action in the undo stack list
-void Invoker::opacityChanged(QGraphicsItem *item, const int &oldOpacity)
+void Invoker::opacityChanged(QGraphicsItem *item,const int &oldOpacity)
 {
     QUndoCommand* command = new OpacityCommand(item, oldOpacity);
     m_undoStack->push(command);

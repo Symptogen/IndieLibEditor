@@ -19,11 +19,16 @@
 
 class EntityElementPanel : public QWidget
 {
+    Q_OBJECT
 public:
-    EntityElementPanel(Entity* item);
+    EntityElementPanel(Entity* item, Scene *scene, QWidget *parent=0);
     void init();
 
+private slots:
+    void opacityAboutToChange(int newValue);
+
 private:
+    Scene* m_scene;
 
     //First part
     Entity* m_entity;

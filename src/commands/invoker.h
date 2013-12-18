@@ -5,10 +5,15 @@
 #include "movecommand.h"
 #include "opacitycommand.h"
 
-class Invoker
+#include <QSlider>
+
+class Invoker : public QObject
 {
+    Q_OBJECT
 public:
     Invoker();
+signals:
+    void opacitySignal(int value);
 
 public slots:
     void itemMoved(QGraphicsItem *movedItem, const QPointF &oldPosition);

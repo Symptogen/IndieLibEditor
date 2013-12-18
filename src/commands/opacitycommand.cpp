@@ -31,3 +31,18 @@ void OpacityCommand::redo()
     m_graphicsItem->setOpacity(m_newOpacity);
     setText(QObject::tr("Change Opacity"));
  }
+
+bool OpacityCommand::mergeWith(const QUndoCommand *command)
+ {
+     const OpacityCommand *opacityCommand = static_cast<const OpacityCommand *>(command);
+     QGraphicsItem *item = opacityCommand->m_graphicsItem;
+
+     if (m_graphicsItem != item)
+     return false;
+
+     m_newOpacity = item->opacity();
+     setText(QObject::tr("Opacity change"));
+
+     return true;
+ }
+
