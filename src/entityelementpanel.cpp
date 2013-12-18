@@ -15,7 +15,7 @@ EntityElementPanel::EntityElementPanel(Entity* item, Scene* scene, QWidget* pare
     m_scene = scene;
     m_entity = item;
     this->init();
-    this->setStyleSheet("background-color: white;");
+    //this->setStyleSheet("background: #222222;");
 }
 
 void EntityElementPanel::init(){

@@ -215,6 +215,7 @@ void MainWindow::newProject(){
     //Update the main window if the dialog succeded
     if (returnValue == 1){
         m_project = new Project(m_wizard->getProjectName(), m_wizard->getSavePath(), m_wizard->getResourcesPath(), m_wizard->getLayerList());
+
         //Updating the actions now a project has been created
         m_newLevelAction->setEnabled(true);
         m_saveAllAction->setEnabled(true);
@@ -230,8 +231,17 @@ void MainWindow::loadLevel(){
 
 }
 
+//! Save the current level into an xml file in the projet default save path
 void MainWindow::saveAll(){
 
+    // Save the map to an XML file
+    QString* savePath = new QString(m_project->getSavePath());
+    savePath->append("/");
+    savePath->append(m_project->getCurrentLevel()->getName());
+    savePath->append(".xml");
+    qDebug() << "save path : " << *savePath;
+
+    m_ioModule->saveLevel(m_project->getCurrentLevel(), *savePath);
 
 }
 //!This function creates a level within the project context and set the main window ready to work
@@ -259,6 +269,10 @@ void MainWindow::setFinalCreationStep(){
     //Scene creation and connection with the element panel
     m_scene = new Scene(m_project->getLayerList(), this);
     m_scene->setInvoker(m_invoker);
+    m_ioModule = new IOModule(m_scene);
+    //Set up the resources
+    m_ioModule->saveTileset(m_project->getResourcesPath(), m_project->getSavePath());
+
     m_elementPanel->setScene(m_scene);
     bool value = QObject::connect(m_scene, SIGNAL(newEntityAdded(Entity*)), m_elementPanel, SLOT(newEntity(Entity*)));
     qDebug() << "connection : " << value;

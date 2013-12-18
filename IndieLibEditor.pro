@@ -11,8 +11,11 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TARGET = IndieLibEditor
 TEMPLATE = app
 
-DEPENDPATH += . tinyxml
-INCLUDEPATH += . tinyxml
+DEPENDPATH += ../libs/tinyxml
+INCLUDEPATH += ../libs/tinyxml
+
+INCLUDEPATH += ../includes ./includes ../libs/tinyxml
+LIBS += -L../libs/tinyxml -ltinyxml
 
 SOURCES += src/main.cpp\
         src/mainwindow.cpp \
@@ -28,7 +31,8 @@ SOURCES += src/main.cpp\
     src/commands/movecommand.cpp \
     src/commands/invoker.cpp \
     src/commands/opacitycommand.cpp \
-    src/entityelementpanel.cpp
+    src/entityelementpanel.cpp \
+    src/iomodule.cpp
 
 HEADERS  += src/mainwindow.h \
     src/elementpanel.h \
@@ -43,4 +47,5 @@ HEADERS  += src/mainwindow.h \
     src/commands/movecommand.h \
     src/commands/invoker.h \
     src/commands/opacitycommand.h \
-    src/entityelementpanel.h
+    src/entityelementpanel.h \
+    src/iomodule.h
