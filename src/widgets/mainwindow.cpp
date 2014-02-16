@@ -67,7 +67,7 @@ void MainWindow::initDockWidgets(){
     m_elementDock->setFeatures(QDockWidget::DockWidgetMovable | QDockWidget::DockWidgetClosable);
 
     //Viewer Widget
-    m_viewer = new Viewer();
+    m_viewer = new QGraphicsView();
     m_viewerDock = new QDockWidget(this->tr(""), this);
     m_viewerDock->setAllowedAreas(Qt::LeftDockWidgetArea);
     m_viewerDock->setWidget(m_viewer);
@@ -237,7 +237,7 @@ void MainWindow::saveAll(){
     // Save the map to an XML file
     QString* savePath = new QString(m_project->getSavePath());
     savePath->append("/");
-    savePath->append(m_project->getCurrentLevel()->getName());
+    savePath->append(m_project->getCurrentLevel());
     savePath->append(".xml");
     qDebug() << "save path : " << *savePath;
 
@@ -254,9 +254,8 @@ void MainWindow::newLevel(){
                                          "Level_1", &ok);
     //Create a Level with the given name
     if (ok && !text.isEmpty()){
-        Level* level = new Level(text);
-        m_project->addLevel(text, level);
-        m_project->setCurrentLevel(level);
+        m_project->addLevel(text);
+        m_project->setCurrentLevel(text);
 
         this->setFinalCreationStep();
 
@@ -268,7 +267,6 @@ void MainWindow::setFinalCreationStep(){
 
     //Scene creation and connection with the element panel
     m_scene = new Scene(m_project->getLayerList(), this);
-    m_scene->setInvoker(m_invoker);
     //m_ioModule = new IOModule(m_scene);
     //Set up the resources
     //m_ioModule->saveTileset(m_project->getResourcesPath(), m_project->getSavePath());
@@ -280,11 +278,11 @@ void MainWindow::setFinalCreationStep(){
     //Init the viewer with a proper title
     QWidget* titleBar = new QWidget();
     QVBoxLayout* layout = new QVBoxLayout();
-    QLabel* label = new QLabel(m_project->getName().toLocal8Bit() + m_project->getCurrentLevel()->getName().toLocal8Bit());
+    QLabel* label = new QLabel(m_project->getName().toLocal8Bit() + m_project->getCurrentLevel().toLocal8Bit());
     layout->addWidget(label);
     titleBar->setLayout(layout);
     m_viewerDock->setTitleBarWidget(titleBar);
-    m_viewer->initView(m_scene, this);
+    m_viewer->setScene(m_scene);
 }
 
 

@@ -13,15 +13,15 @@
 
 #include <QMainWindow>
 #include <QDockWidget>
+#include <QGraphicsView>
 #include <QMenu>
 //#include "iomodule.h"
 #include "elementpanel.h"
 #include "hierarchypanel.h"
-#include "viewer.h"
-#include "graphics/scene.h"
-#include "project.h"
-#include "dialog/newprojectdialog.h"
-#include "commands/invoker.h"
+#include "../graphic/scene.h"
+#include "../project.h"
+#include "../dialogs/newprojectdialog.h"
+#include "../command/invoker.h"
 
 class MainWindow : public QMainWindow
 {
@@ -50,7 +50,7 @@ private:
     //IOModule* m_ioModule;
     ElementPanel* m_elementPanel;
     HierarchyPanel* m_hierarchyPanel;
-    Viewer* m_viewer;
+    QGraphicsView* m_viewer;
     Scene* m_scene;
     Project* m_project;
     Invoker* m_invoker;

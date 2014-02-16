@@ -13,6 +13,6 @@ Project::Project(QString name, QString savePath, QString resourcePath, QStringLi
 }
 
 //! Add a new level to the list of levels
-void Project::addLevel(QString name, Level* level){
-    m_levelList.insert(name, level);
+void Project::addLevel(QString name){
+    m_levelList << name;
 }

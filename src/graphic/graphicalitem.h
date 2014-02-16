@@ -5,17 +5,16 @@
  *\todo
 */
 
-#ifndef ENTITY_H
-#define ENTITY_H
+#ifndef INDIELIB_EDITOR_GRAPHIC_GRAPHICAL_ITEM_H
+#define INDIELIB_EDITOR_GRAPHIC_GRAPHICAL_ITEM_H
 
 #include <QGraphicsPixmapItem>
-#include "scene.h"
 
-class Entity : public QGraphicsPixmapItem
+class GraphicalItem : public QGraphicsPixmapItem
 {
 public:
     enum { Type = UserType + 1 };
-    Entity(QString name, QPixmap pixmap);
+    GraphicalItem(QString name, QPixmap pixmap);
     int type() const{return Type;}
 
     //-------------- Event Handlers ---------------- //
@@ -23,15 +22,12 @@ public:
     QVariant itemChange(GraphicsItemChange change, const QVariant &value);
 
     //----------- Getter /Setter ---------------- //
-    void setScene(Scene* scene){m_scene = scene;}
-    Scene* getScene(){return m_scene;}
     QString name(){return m_name;}
     void setName(QString name){m_name = name;}
 
 private:
      QPointF m_oldPos;
      qreal m_oldOpacity;
-     Scene* m_scene;
      QString m_name;
 };
-#endif // ENTITY_H
+#endif // INDIELIB_EDITOR_GRAPHICAL_ITEM_H

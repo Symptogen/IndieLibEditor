@@ -9,10 +9,9 @@
 #include <QLineEdit>
 #include <QDebug>
 
-EntityElementPanel::EntityElementPanel(Entity* item, Scene* scene, QWidget* parent):
+EntityElementPanel::EntityElementPanel(GraphicalItem* item, QWidget* parent):
     QWidget(parent)
 {
-    m_scene = scene;
     m_entity = item;
     this->init();
     //this->setStyleSheet("background: #222222;");
@@ -44,14 +43,14 @@ void EntityElementPanel::init(){
     m_posX = new QSpinBox(this);
     m_posX->setValue(m_entity->pos().x());
     //TODO : find a way to grab max from the scene rect width
-    m_posX->setRange(0, m_entity->scene()->width());
+    //m_posX->setRange(0, m_entity->scene()->width());
     m_posX->setSingleStep(1);
     m_posX->setSuffix("px");
 
     m_posY = new QSpinBox();
     m_posX->setValue(m_entity->pos().y());
     //TODO : find a way to grab max from the scene rect width
-    m_posY->setRange(0, m_entity->scene()->width());
+    //m_posY->setRange(0, m_entity->scene()->width());
     m_posY->setSingleStep(1);
     m_posY->setSuffix("px");
 

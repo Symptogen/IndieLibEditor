@@ -9,7 +9,7 @@
 #include "elementpanel.h"
 #include <QGraphicsItem>
 #include "entityelementpanel.h"
-#include "graphics/entity.h"
+#include "../graphic/graphicalitem.h"
 #include <QDebug>
 
 ElementPanel::ElementPanel()
@@ -37,7 +37,7 @@ void ElementPanel::initElementPanel(){
 
             //Creates an entity panel
             if(m_scene->items().at(i)->type() == QGraphicsItem::UserType + 1){
-                QWidget* widget = new EntityElementPanel(qgraphicsitem_cast<Entity*>(m_scene->items().at(i)), m_scene);
+                QWidget* widget = new EntityElementPanel(qgraphicsitem_cast<GraphicalItem*>(m_scene->items().at(i)));
                 this->m_entityStacked->addWidget(widget);
             }
             //creates a Background panel
@@ -50,11 +50,11 @@ void ElementPanel::initElementPanel(){
 }
 
 //! Creates a new panel because an entity was added to the scene
-void ElementPanel::newEntity(Entity* item){
+void ElementPanel::newEntity(GraphicalItem* item){
     qDebug() << "new entity received in Element panel !";
     if(item->type() == QGraphicsItem::UserType + 1){
         qDebug() << "creation of the panel ...";
-        QWidget* widget = new EntityElementPanel(item, m_scene);
+        QWidget* widget = new EntityElementPanel(item);
         this->m_entityStacked->addWidget(widget);
         this->m_entityStacked->setCurrentWidget(widget);
     }

@@ -10,9 +10,9 @@
 #define _INDIELIB_EDITOR_ELEMENTPANEL_H
 
 #include <QStackedWidget>
-#include "graphics/entity.h"
-#include "graphics/scene.h"
-#include "commands/invoker.h"
+#include "../graphic/graphicalitem.h"
+#include "../graphic/scene.h"
+#include "../command/invoker.h"
 
 class ElementPanel : public QStackedWidget
 {
@@ -24,7 +24,7 @@ public:
     Scene* getScene(){return m_scene;}
 
 private slots:
-    void newEntity(Entity* item);
+    void newEntity(GraphicalItem* item);
 
 private:
     Scene* m_scene;

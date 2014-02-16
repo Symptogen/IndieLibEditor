@@ -12,34 +12,29 @@ TARGET = IndieLibEditor
 TEMPLATE = app
 
 SOURCES += src/main.cpp\
-        src/mainwindow.cpp \
-    src/elementpanel.cpp \
-    src/hierarchypanel.cpp \
-    src/viewer.cpp \
+        src/widgets/mainwindow.cpp \
+    src/widgets/elementpanel.cpp \
+    src/widgets/hierarchypanel.cpp \
     src/project.cpp \
-    src/level.cpp \
-    src/dialog/newprojectdialog.cpp \
-    src/graphics/scene.cpp \
-    src/graphics/entity.cpp \
-    src/graphics/background.cpp \
-    src/commands/movecommand.cpp \
-    src/commands/invoker.cpp \
-    src/commands/opacitycommand.cpp \
-    src/entityelementpanel.cpp \
-    src/iomodule.cpp
+    src/dialogs/newprojectdialog.cpp \
+    src/graphic/scene.cpp \
+    src/command/movecommand.cpp \
+    src/command/invoker.cpp \
+    src/command/opacitycommand.cpp \
+    src/widgets/entityelementpanel.cpp \
+    src/iomodule.cpp \
+    src/graphic/graphicalitem.cpp
 
-HEADERS  += src/mainwindow.h \
-    src/elementpanel.h \
-    src/hierarchypanel.h \
-    src/viewer.h \
+HEADERS  += src/widgets/mainwindow.h \
+    src/widgets/elementpanel.h \
+    src/widgets/hierarchypanel.h \
     src/project.h \
     src/level.h \
-    src/dialog/newprojectdialog.h \
-    src/graphics/scene.h \
-    src/graphics/entity.h \
-    src/graphics/background.h \
-    src/commands/movecommand.h \
-    src/commands/invoker.h \
-    src/commands/opacitycommand.h \
-    src/entityelementpanel.h \
-    src/iomodule.h
+    src/dialogs/newprojectdialog.h \
+    src/graphic/scene.h \
+    src/command/movecommand.h \
+    src/command/invoker.h \
+    src/command/opacitycommand.h \
+    src/widgets/entityelementpanel.h \
+    src/iomodule.h \
+    src/graphic/graphicalitem.h

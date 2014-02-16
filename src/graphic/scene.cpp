@@ -8,9 +8,7 @@
 #include <QGraphicsView>
 #include <QGraphicsPixmapItem>
 #include <QDebug>
-#include "background.h"
 #include "scene.h"
-#include "entity.h"
 
 Scene::Scene(QStringList layerList, QObject *parent):
     QGraphicsScene(parent)
@@ -26,7 +24,7 @@ Scene::Scene(QStringList layerList, QObject *parent):
     QString path = "C:/Users/Cecilia/Pictures/editorResources/set3/background.png";
     //this->setBackground(path);
     QPixmap* imageBackground = new QPixmap(path);
-    Background* background= new Background(*imageBackground);
+    QGraphicsPixmapItem* background= new QGraphicsPixmapItem(*imageBackground);
     this->addItem(background);
 
 }
@@ -35,9 +33,8 @@ Scene::Scene(QStringList layerList, QObject *parent):
 void Scene::newEntity(QString name){
 
     QPixmap* image = new QPixmap(*m_defaultImagePath);
-    Entity* item = new Entity(name, *image);
+    GraphicalItem* item = new GraphicalItem(name, *image);
     this->addItem(item);
-    item->setScene(this);
 
     //Emit a signal
     emit this->newEntityAdded(item);

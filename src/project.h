@@ -11,9 +11,7 @@
 #define PROJECT_H
 
 #include <QString>
-#include <QHash>
 #include <QStringList>
-#include "level.h"
 
 class Project
 {
@@ -21,25 +19,25 @@ public:
     Project(QString name, QString savePath, QString resourcePath, QStringList layerList);
 
     //void addLayerItem(QString name, int pos);
-    void addLevel(QString name, Level* level);
+    void addLevel(QString name);
 
     //---------- Getter / Setter----------- //
     void setResourcesPath(QString path){m_resourcesPath = path;}
-    void setCurrentLevel(Level* level){m_currentLevel = level;}
-    QHash<QString, Level*> getLevelList(){return m_levelList;}
+    void setCurrentLevel(QString level){m_currentLevel = level;}
+    QStringList getLevelList(){return m_levelList;}
     QStringList getLayerList(){return m_layerList;}
     QString getSavePath(){return m_savePath;}
     QString getName(){return m_name;}
     QString getResourcesPath(){return m_resourcesPath;}
-    Level* getCurrentLevel(){return m_currentLevel;}
+    QString getCurrentLevel(){return m_currentLevel;}
 
 private:
     QString m_name;
     QString m_savePath;
     QString m_resourcesPath;
-    QHash<QString, Level*> m_levelList;
+    QStringList  m_levelList;
     QStringList m_layerList;
-    Level* m_currentLevel;
+    QString m_currentLevel;
 
 };
 

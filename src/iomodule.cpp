@@ -3,7 +3,7 @@
 #include <QDir>
 #include <QFileInfo>
 #include <QGraphicsItem>
-#include "mainwindow.h"
+#include "widgets/mainwindow.h"
 
 IOModule::IOModule(Scene *scene)
 {
@@ -56,7 +56,7 @@ void IOModule::saveTileset(QString path, QString savePath){
 //    }
 }
 
-void IOModule::saveLevel(Level *level, QString path){
+void IOModule::saveLevel(QString path){
 //    QFileInfo* file = new QFileInfo(path);
 //    if (file->dir().exists()){
 //        qDebug() << "Saving level ...";

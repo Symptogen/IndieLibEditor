@@ -15,23 +15,21 @@
 #include <QSlider>
 #include <QSpinBox>
 #include <QGridLayout>
-#include "graphics/entity.h"
+#include "../graphic/graphicalitem.h"
 
 class EntityElementPanel : public QWidget
 {
     Q_OBJECT
 public:
-    EntityElementPanel(Entity* item, Scene *scene, QWidget *parent=0);
+    EntityElementPanel(GraphicalItem* item, QWidget *parent=0);
     void init();
 
 private slots:
     void opacityAboutToChange(int newValue);
 
 private:
-    Scene* m_scene;
-
     //First part
-    Entity* m_entity;
+    GraphicalItem* m_entity;
     QLabel* m_type;
     QLabel* m_name;
     QLabel* m_thumbnail;
