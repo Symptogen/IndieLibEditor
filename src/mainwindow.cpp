@@ -10,6 +10,7 @@
 #include <QSettings>
 #include <QMessageBox>
 #include <QInputDialog>
+#include <QVBoxLayout>
 
 #include <QDebug>
 
@@ -25,9 +26,13 @@ MainWindow::MainWindow(QWidget *parent)
     restoreGeometry(settings.value("geometry").toByteArray());
     //restoreState(settings.value("state").toByteArray());
 
+    //Init the command pattern for the undo/redo
+    m_invoker = new Invoker();
+
     this->initStatusBar();
     this->initActions();
     this->initMenu();
+    this->initDockWidgets();
 }
 
 MainWindow::~MainWindow()
@@ -62,12 +67,11 @@ void MainWindow::initDockWidgets(){
     m_elementDock->setFeatures(QDockWidget::DockWidgetMovable | QDockWidget::DockWidgetClosable);
 
     //Viewer Widget
-    m_scene = new Scene(m_project->getLayerList(), this);
-    m_viewer = new Viewer(m_scene, this);
-    m_viewerDock = new QDockWidget(this->tr(m_project->getName().toLocal8Bit() + " - " + m_project->getCurrentLevel()->getName().toLocal8Bit()), this);
+    m_viewer = new Viewer();
+    m_viewerDock = new QDockWidget(this->tr(""), this);
     m_viewerDock->setAllowedAreas(Qt::LeftDockWidgetArea);
     m_viewerDock->setWidget(m_viewer);
-    m_viewerDock->setFeatures(QDockWidget::DockWidgetMovable | QDockWidget::DockWidgetClosable);
+    m_viewerDock->setFeatures(QDockWidget::NoDockWidgetFeatures);
 
     //Add the dock to the main window
     this->addDockWidget(Qt::LeftDockWidgetArea, m_viewerDock);
@@ -95,6 +99,15 @@ void MainWindow::initMenu(){
      m_fileMenu->addAction(m_saveAllAction);
      m_fileMenu->addSeparator();
      m_fileMenu->addAction(m_quitAction);
+
+     //Edit Menu
+     m_editMenu = this->menuBar()->addMenu(this->tr("&Edit"));
+     m_editMenu->addAction(m_undoAction);
+     m_editMenu->addAction(m_redoAction);
+
+     //Project Menu
+     m_projectMenu = this->menuBar()->addMenu(this->tr("&Project"));
+     m_projectMenu->addAction(m_projectOptionsAction);
 
      //About Menu
      m_aboutMenu = this->menuBar()->addMenu(this->tr("&About"));
@@ -147,12 +160,20 @@ void MainWindow::initActions(){
         m_saveAllAction->setEnabled(false);
     }
 
-    //---------------- FILE MENU ACTION ---------------------------- //
+    //---------------- PROJECT MENU ACTION ---------------------------- //
 
     //Project options
     m_projectOptionsAction = new QAction(this->tr("Project Options"), this);
     m_projectOptionsAction->setStatusTip(this->tr("Open a dialog with the main project properties"));
     this->connect(m_projectOptionsAction, SIGNAL(triggered()), this, SLOT(projectOptions()));
+
+    //---------------- EDIT MENU ACTION ---------------------------- //
+
+    m_undoAction = m_invoker->getStack()->createUndoAction(this, tr("&Undo"));
+    m_undoAction->setShortcuts(QKeySequence::Undo);
+
+    m_redoAction = m_invoker->getStack()->createRedoAction(this, tr("&Redo"));
+    m_redoAction->setShortcuts(QKeySequence::Redo);
 
 }
 //------------------------- SLOTS ----------------------------- //
@@ -194,6 +215,7 @@ void MainWindow::newProject(){
     //Update the main window if the dialog succeded
     if (returnValue == 1){
         m_project = new Project(m_wizard->getProjectName(), m_wizard->getSavePath(), m_wizard->getResourcesPath(), m_wizard->getLayerList());
+
         //Updating the actions now a project has been created
         m_newLevelAction->setEnabled(true);
         m_saveAllAction->setEnabled(true);
@@ -209,8 +231,17 @@ void MainWindow::loadLevel(){
 
 }
 
+//! Save the current level into an xml file in the projet default save path
 void MainWindow::saveAll(){
 
+    // Save the map to an XML file
+    QString* savePath = new QString(m_project->getSavePath());
+    savePath->append("/");
+    savePath->append(m_project->getCurrentLevel()->getName());
+    savePath->append(".xml");
+    qDebug() << "save path : " << *savePath;
+
+    //m_ioModule->saveLevel(m_project->getCurrentLevel(), *savePath);
 
 }
 //!This function creates a level within the project context and set the main window ready to work
@@ -226,9 +257,36 @@ void MainWindow::newLevel(){
         Level* level = new Level(text);
         m_project->addLevel(text, level);
         m_project->setCurrentLevel(level);
-        this->initDockWidgets();
+
+        this->setFinalCreationStep();
+
     }
 }
+
+//! When a level is created, we can set  the final steps for the window creation and connect widgets between one another
+void MainWindow::setFinalCreationStep(){
+
+    //Scene creation and connection with the element panel
+    m_scene = new Scene(m_project->getLayerList(), this);
+    m_scene->setInvoker(m_invoker);
+    //m_ioModule = new IOModule(m_scene);
+    //Set up the resources
+    //m_ioModule->saveTileset(m_project->getResourcesPath(), m_project->getSavePath());
+
+    m_elementPanel->setScene(m_scene);
+    bool value = QObject::connect(m_scene, SIGNAL(newEntityAdded(Entity*)), m_elementPanel, SLOT(newEntity(Entity*)));
+    qDebug() << "connection : " << value;
+
+    //Init the viewer with a proper title
+    QWidget* titleBar = new QWidget();
+    QVBoxLayout* layout = new QVBoxLayout();
+    QLabel* label = new QLabel(m_project->getName().toLocal8Bit() + m_project->getCurrentLevel()->getName().toLocal8Bit());
+    layout->addWidget(label);
+    titleBar->setLayout(layout);
+    m_viewerDock->setTitleBarWidget(titleBar);
+    m_viewer->initView(m_scene, this);
+}
+
 
 //! Shows up a dialog to expose the project properties and to change them if need.
 void MainWindow::projectOptions(){

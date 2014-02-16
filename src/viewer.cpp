@@ -6,11 +6,30 @@
 */
 
 #include "viewer.h"
+#include <QHBoxLayout>
+#include <QLabel>
 
-Viewer::Viewer(QGraphicsScene * scene, QWidget * parent):
-    QGraphicsView(parent)
+Viewer::Viewer(QWidget *parent):
+    QStackedWidget(parent)
 {
-    this->setScene(scene);
-    this->setMinimumWidth(400);
-    this->setMinimumHeight(400);
+    //Creates an empty widget to initiate the view nad to tell the user there is no project
+    m_emptyWidget = new QWidget();
+    QHBoxLayout* layout = new QHBoxLayout();
+    QLabel* label = new QLabel(" There is no level to work on. First create a project, then create a level. ");
+    layout->addWidget(label);
+    m_emptyWidget->setLayout(layout);
+    this->addWidget(m_emptyWidget);
+    this->setCurrentWidget(m_emptyWidget);
+}
+
+
+//! Construct the graphic view and add to the stack
+void Viewer::initView(QGraphicsScene *scene, QWidget *parent){
+    m_viewWidget = new QGraphicsView(scene, parent);
+    m_viewWidget->setScene(scene);
+    m_viewWidget->setMinimumWidth(400);
+    m_viewWidget->setMinimumHeight(400);
+
+    this->addWidget(m_viewWidget);
+    this->setCurrentWidget(m_viewWidget);
 }

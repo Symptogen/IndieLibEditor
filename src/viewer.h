@@ -9,11 +9,17 @@
 #define VIEWER_H
 
 #include <QGraphicsView>
+#include <QStackedWidget>
 
-class Viewer : public QGraphicsView
+class Viewer : public QStackedWidget
 {
 public:
-    Viewer(QGraphicsScene * scene, QWidget * parent = 0);
+    Viewer(QWidget * parent = 0);
+    void initView(QGraphicsScene * scene, QWidget * parent = 0);
+
+private:
+    QGraphicsView* m_viewWidget;
+    QWidget* m_emptyWidget;
 };
 
 #endif // VIEWER_H

@@ -10,12 +10,26 @@
 #define _INDIELIB_EDITOR_ELEMENTPANEL_H
 
 #include <QStackedWidget>
+#include "graphics/entity.h"
+#include "graphics/scene.h"
+#include "commands/invoker.h"
 
 class ElementPanel : public QStackedWidget
 {
     Q_OBJECT
 public:
     ElementPanel();
+    void initElementPanel();
+    void setScene(Scene* scene);
+    Scene* getScene(){return m_scene;}
+
+private slots:
+    void newEntity(Entity* item);
+
+private:
+    Scene* m_scene;
+    QStackedWidget* m_entityStacked;
+    QStackedWidget* m_backgroundStacked;
 };
 
 #endif // _INDIELIB_EDITOR_ELEMENTPANEL_H
