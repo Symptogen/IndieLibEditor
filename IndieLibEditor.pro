@@ -11,12 +11,6 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TARGET = IndieLibEditor
 TEMPLATE = app
 
-DEPENDPATH += ../libs/tinyxml
-INCLUDEPATH += ../libs/tinyxml
-
-INCLUDEPATH += ../includes ./includes ../libs/tinyxml
-LIBS += -L../libs/tinyxml -ltinyxml
-
 SOURCES += src/main.cpp\
         src/mainwindow.cpp \
     src/elementpanel.cpp \

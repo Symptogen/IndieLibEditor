@@ -14,7 +14,7 @@
 #include <QMainWindow>
 #include <QDockWidget>
 #include <QMenu>
-#include "iomodule.h"
+//#include "iomodule.h"
 #include "elementpanel.h"
 #include "hierarchypanel.h"
 #include "viewer.h"
@@ -47,7 +47,7 @@ public slots:
     void projectOptions();
 
 private:
-    IOModule* m_ioModule;
+    //IOModule* m_ioModule;
     ElementPanel* m_elementPanel;
     HierarchyPanel* m_hierarchyPanel;
     Viewer* m_viewer;

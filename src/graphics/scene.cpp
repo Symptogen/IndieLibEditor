@@ -15,7 +15,7 @@
 Scene::Scene(QStringList layerList, QObject *parent):
     QGraphicsScene(parent)
 {
-    m_defaultImagePath = new QString( "/home/cecilia/Documents/Editor/resources/images/set3/bearPurple.png");
+    m_defaultImagePath = new QString( "C:/Users/Cecilia/Pictures/editorResources/set3/bearPurple.png");
 
     //Create all the layers corresponding to the categories in the projet properties
     for(int i = 0; i<layerList.count(); ++i){
@@ -23,7 +23,7 @@ Scene::Scene(QStringList layerList, QObject *parent):
     }
 
     //TEMPORARY
-    QString path = "/home/cecilia/Documents/Editor/resources/images/set3/background.png";
+    QString path = "C:/Users/Cecilia/Pictures/editorResources/set3/background.png";
     //this->setBackground(path);
     QPixmap* imageBackground = new QPixmap(path);
     Background* background= new Background(*imageBackground);

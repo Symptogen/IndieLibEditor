@@ -2,7 +2,6 @@
 #define IOMODULE_H
 
 #include "level.h"
-#include "tinyxml.h"
 #include "graphics/scene.h"
 
 class IOModule
