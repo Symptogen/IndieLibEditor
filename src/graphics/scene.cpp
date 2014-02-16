@@ -21,13 +21,13 @@ Scene::Scene(QStringList layerList, QObject *parent):
     }
 
     //TEMPORARY
-    QString path = "/home/cecilia/Documents/Editor/resources/images/set3/background.png";
+    QString path = "C:/Users/Cecilia/Pictures/editorResources/set3/background.png";
     //this->setBackground(path);
     QPixmap* imageBackground = new QPixmap(path);
     Background* background= new Background(*imageBackground);
     this->addItem(background);
 
-    QString imagePath = "/home/cecilia/Documents/Editor/resources/images/set3/bearPurple.png";
+    QString imagePath = "C:/Users/Cecilia/Pictures/editorResources/set3/bearPurple.png";
     QPixmap* image = new QPixmap(imagePath);
     Entity* item = new Entity(*image);
     this->addItem(item);
