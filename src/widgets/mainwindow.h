@@ -21,15 +21,14 @@
 #include "../project.h"
 #include "../dialogs/newprojectdialog.h"
 #include "../command/invoker.h"
-#include "../iomodule.h"
 
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
     
 public:
-    MainWindow(IOModule *ioModule, QWidget *parent = 0);
-    ~MainWindow();
+    MainWindow(QWidget *parent = 0);
+    ~MainWindow(){}
 
     void init();
     void initDockWidgets();
@@ -39,6 +38,7 @@ public:
     void setFinalCreationStep();
 
     //Setters
+    void setProject(Project* project) {m_project = project;}
     void setNewProjectAction(QAction* action) {m_newProjectAction = action;}
     void setOpenProjectAction(QAction* action) {m_openProjectAction = action;}
     void setNewLevelAction(QAction* action) {m_newLevelAction = action;}
@@ -49,12 +49,14 @@ public:
     void setUndoAction(QAction* action) {m_undoAction = action;}
     void setRedoAction(QAction* action) {m_redoAction = action;}
 
+    //Getter
+    Scene* getScene() const {return m_scene;}
+
 private:
     ElementPanel* m_elementPanel;
     HierarchyPanel* m_hierarchyPanel;
     QGraphicsView* m_viewer;
     Scene* m_scene;
-    IOModule* m_ioModule;
     Project* m_project;
 
     QDockWidget* m_elementDock;

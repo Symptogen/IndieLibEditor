@@ -5,22 +5,46 @@
 #include <QInputDialog>
 #include "dialogs/newprojectdialog.h"
 
+/**
+* @brief Application constructor.
+* Responsible for the initialization of the private attributes of #Application class and for the initialization of the #MainWindow class.
+* @param argc is application entry number of variables
+* @param argv is the argument given as parameter at the application launch
+* @see MainWindow
+* @see ~Application()
+*/
 Application::Application(int& argc, char** argv) :
     QApplication(argc, argv)
 {
-    //m_ioModule = new IOModule();
-    m_mainWindow = new MainWindow(m_ioModule);
+    // Instanciate the IOModule
+    m_ioModule = new IOModule();
 
+    //Initialize the main actions and the mainWindow
+    m_mainWindow = new MainWindow();
     initActions();
     m_mainWindow->init();
 }
 
+/**
+* @brief Function that display the #MainWindow
+* This function is done when all the mandatory attributes are initialized. The main file needs the return value of the #MainWindow to
+* stop the loop.
+* @return bool the result of the execution of the #MainWindow class : if it is closed, then the return value while close the main loop
+* @see MainWindow
+* @see Application
+*/
 int Application::start(){
     m_mainWindow->show();
     return this->exec();
 }
 
-//!Create the actions that are used in the MainWindow menu
+/**
+* @brief Creates all the actions that will be displayed in the #MainWindow menus
+* These actions needs to be created in the #Application class because the logical code of their connected slot function belongs in the
+* #Application class. So each time a QAction is created, it is set also for the #MainWindow to add it the menu or toolbar.
+* @see MainWindow
+* @see Application
+*/
 void Application::initActions(){
 
     //---------------- FILE MENU ACTION ---------------------------- //
@@ -105,8 +129,9 @@ void Application::newProject(){
 
         switch (ret) {
            case QMessageBox::Save:
-               // Save was clicked
+               //Save was clicked
                qDebug() << "Save" ;
+               saveAll();
                break;
            case QMessageBox::Discard:
                // Don't Save was clicked
@@ -123,12 +148,13 @@ void Application::newProject(){
     }
 
     //Show a custom dialog for the project creation
-    NewProjectDialog* m_wizard = new NewProjectDialog();
-    int returnValue = m_wizard->exec();
+    NewProjectDialog* wizard = new NewProjectDialog();
+    int returnValue = wizard->exec();
 
-    //Update the main window if the dialog succeded
+    //Update the mainWindow and create a project if the dialog succeded
     if (returnValue == 1){
-        m_project = new Project(m_wizard->getProjectName(), m_wizard->getSavePath(), m_wizard->getResourcesPath(), m_wizard->getLayerList());
+        m_project = new Project(wizard->getProjectName(), wizard->getSavePath(), wizard->getResourcesPath(), wizard->getLayerList());
+        m_mainWindow->setProject(m_project);
 
         //Updating the actions now a project has been created
         m_newLevelAction->setEnabled(true);
@@ -155,7 +181,7 @@ void Application::saveAll(){
     savePath->append(".xml");
     qDebug() << "save path : " << *savePath;
 
-    //m_ioModule->saveLevel(m_project->getCurrentLevel(), *savePath);
+    m_ioModule->saveLevel(m_project->getCurrentLevel(), m_mainWindow->getScene());
 
 }
 //!This function creates a level within the project context and set the main window ready to work
@@ -172,6 +198,9 @@ void Application::newLevel(){
         m_project->setCurrentLevel(text);
 
         m_mainWindow->setFinalCreationStep();
+
+        //Set up the resources
+        m_ioModule->saveTileset(m_project->getResourcesPath(), m_project->getSavePath());
 
     }
 }

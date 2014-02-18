@@ -15,19 +15,14 @@
 #include <QDebug>
 
 
-MainWindow::MainWindow(IOModule* ioModule, QWidget *parent)
-    : QMainWindow(parent), m_ioModule(ioModule)
+MainWindow::MainWindow(QWidget *parent)
+    : QMainWindow(parent)
 {
 
     //Restore the previous geometry
     QSettings settings("Symptogene Team", "Level Editor");
     restoreGeometry(settings.value("geometry").toByteArray());
     //restoreState(settings.value("state").toByteArray());
-}
-
-MainWindow::~MainWindow()
-{
-    
 }
 
 void MainWindow::init(){
@@ -116,10 +111,6 @@ void MainWindow::setFinalCreationStep(){
 
     //Scene creation and connection with the element panel
     m_scene = new Scene(m_project->getLayerList(), this);
-    m_ioModule = new IOModule(m_scene);
-    //Set up the resources
-    m_ioModule->saveTileset(m_project->getResourcesPath(), m_project->getSavePath());
-
     m_elementPanel->setScene(m_scene);
     bool value = QObject::connect(m_scene, SIGNAL(newEntityAdded(Entity*)), m_elementPanel, SLOT(newEntity(Entity*)));
     qDebug() << "connection : " << value;

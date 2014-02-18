@@ -5,58 +5,52 @@
 #include <QGraphicsItem>
 #include "widgets/mainwindow.h"
 
-IOModule::IOModule(Scene *scene)
-{
-    m_scene = scene;
+
+void IOModule::saveTileset(QString resourcesPath, QString savePath){
+    QDir* resourcesDir = new QDir(resourcesPath);
+    QDir* saveDir = new QDir(savePath);
+    //Test the validity of the path
+    if (!resourcesDir->exists() || !saveDir->exists()){
+        qDebug() << "The dir for saving the tileset and map does not exists.";
+    } else {
+        //Creation of the DOM
+        m_saveTilesetPath = new QString(savePath);
+        m_saveTilesetPath->append("/tileset.xml");
+        QDomDocument *dom = new QDomDocument("mon_xml");
+
+        // Check up
+        QFile xml_doc(m_saveTilesetPath->toStdString().c_str());
+        if(!xml_doc.open(QIODevice::WriteOnly)){
+            // If troubles in opening the xml file
+            qDebug() <<"Opening : Erreur à l'ouverture du document XML";
+            return;
+        }
+
+        QXmlStreamWriter stream(&xml_doc);
+        stream.setAutoFormatting(true);
+        stream.writeStartDocument();
+
+            stream.writeStartElement("resources");
+                stream.writeStartElement("surfaces");
+                QStringList files = resourcesDir->entryList(QDir::Files, QDir::Type);
+                int counter = 1;
+                for (int i = 0; i<files.count(); ++i){
+                    if (QFileInfo(files.at(i)).completeSuffix() == "png" || QFileInfo(files.at(i)).completeSuffix() == "jpg"){
+
+
+                        stream.writeStartElement("surface");
+                        stream.writeAttribute("id", QString::number(counter));
+                        stream.writeAttribute("image", files.at(i).toStdString().c_str());
+                        stream.writeEndElement();
+                        counter ++;
+                    }
+                }
+            stream.writeEndElement();
+        stream.writeEndDocument();
+    }
 }
 
-void IOModule::saveTileset(QString path, QString savePath){
-//    QDir* dir = new QDir(path);
-//    QDir* saveDir = new QDir(savePath);
-//    //Test the validity of the path
-//    if (dir->exists() && saveDir->exists()){
-//        TiXmlDocument mXmlDoc;
-
-//        // XML Declaration
-//        TiXmlDeclaration *mDecl = new TiXmlDeclaration ("1.0", "", "");
-//        mXmlDoc.LinkEndChild (mDecl);
-
-//        // Resources tag
-//        TiXmlElement *mXRoot = new TiXmlElement ("resources");
-//        mXmlDoc.LinkEndChild (mXRoot);
-
-//        // Surfaces tag
-//        TiXmlElement *mXRootSurface = new TiXmlElement ("surfaces");
-//        mXRoot->LinkEndChild (mXRootSurface);
-
-//        //List of resources
-//        QStringList files = dir->entryList(QDir::Files, QDir::Type);
-//        int counter = 1;
-//        for (int i = 0; i<files.count(); ++i){
-//            if (QFileInfo(files.at(i)).completeSuffix() == "png" || QFileInfo(files.at(i)).completeSuffix() == "jpg"){
-//                TiXmlElement *mXNode = new TiXmlElement ("surface");
-//                mXNode->SetAttribute ("id", counter);
-//                mXNode->SetAttribute("image", files.at(i).toStdString().c_str());
-//                mXRootSurface->LinkEndChild (mXNode);
-//                counter ++;
-//            }
-//        }
-
-//        // Save the map to an XML file
-//        m_saveTilesetPath = new QString(savePath);
-//        m_saveTilesetPath->append("/tileset.xml");
-
-//        bool returnValue = mXmlDoc.SaveFile(m_saveTilesetPath->toStdString().c_str());
-//        if (!returnValue){
-//            qDebug() << "failed to save the tileset.";
-//        }
-
-//    }else{
-//        qDebug() << "Oups : not a valid resources dir or save dir!";
-//    }
-}
-
-void IOModule::saveLevel(QString path){
+void IOModule::saveLevel(QString path, Scene* scene){
 //    QFileInfo* file = new QFileInfo(path);
 //    if (file->dir().exists()){
 //        qDebug() << "Saving level ...";

@@ -2,17 +2,17 @@
 #define IOMODULE_H
 
 #include "graphic/scene.h"
+#include <QtXml>
 
 class IOModule
 {
 public:
-    IOModule(Scene* scene);
+    IOModule(){}
 
-    void saveTileset(QString path, QString savePath);
-    void saveLevel(QString path);
+    void saveTileset(QString resourcesPath, QString savePath);
+    void saveLevel(QString path, Scene *scene);
 
 private:
-    Scene* m_scene;
     QString* m_saveTilesetPath;
 };
 
