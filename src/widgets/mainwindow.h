@@ -15,46 +15,47 @@
 #include <QDockWidget>
 #include <QGraphicsView>
 #include <QMenu>
-//#include "iomodule.h"
 #include "elementpanel.h"
 #include "hierarchypanel.h"
 #include "../graphic/scene.h"
 #include "../project.h"
 #include "../dialogs/newprojectdialog.h"
 #include "../command/invoker.h"
+#include "../iomodule.h"
 
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
     
 public:
-    MainWindow(QWidget *parent = 0);
+    MainWindow(IOModule *ioModule, QWidget *parent = 0);
     ~MainWindow();
 
+    void init();
     void initDockWidgets();
     void initStatusBar();
     void initMenu();
-    void initActions();
     void closeEvent(QCloseEvent *event);
     void setFinalCreationStep();
 
-public slots:
-    void newProject();
-    void openProject();
-    void loadLevel();
-    void newLevel();
-    void saveAll();
-    void projectOptions();
+    //Setters
+    void setNewProjectAction(QAction* action) {m_newProjectAction = action;}
+    void setOpenProjectAction(QAction* action) {m_openProjectAction = action;}
+    void setNewLevelAction(QAction* action) {m_newLevelAction = action;}
+    void setLoadLevelAction(QAction* action) {m_loadLevelAction = action;}
+    void setSaveAllAction(QAction* action) {m_saveAllAction = action;}
+    void setQuitAction(QAction* action) {m_quitAction = action;}
+    void setProjectOptionsAction(QAction* action) {m_projectOptionsAction = action;}
+    void setUndoAction(QAction* action) {m_undoAction = action;}
+    void setRedoAction(QAction* action) {m_redoAction = action;}
 
 private:
-    //IOModule* m_ioModule;
     ElementPanel* m_elementPanel;
     HierarchyPanel* m_hierarchyPanel;
     QGraphicsView* m_viewer;
     Scene* m_scene;
+    IOModule* m_ioModule;
     Project* m_project;
-    Invoker* m_invoker;
-    NewProjectDialog* m_wizard;
 
     QDockWidget* m_elementDock;
     QDockWidget* m_hierarchyDock;

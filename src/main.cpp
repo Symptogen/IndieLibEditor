@@ -4,14 +4,10 @@
  *\date 15-12-2013
 */
 
-#include <QApplication>
-#include "widgets/mainwindow.h"
+#include "application.h"
 
 int main(int argc, char *argv[])
 {
-    QApplication a(argc, argv);
-    MainWindow w;
-    w.show();
-    
-    return a.exec();
+    Application* a = new Application(argc, argv);
+    return a->start();
 }

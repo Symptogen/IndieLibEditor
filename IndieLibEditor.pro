@@ -16,6 +16,7 @@ SOURCES += src/main.cpp\
     src/widgets/elementpanel.cpp \
     src/widgets/hierarchypanel.cpp \
     src/project.cpp \
+    src/application.cpp \
     src/dialogs/newprojectdialog.cpp \
     src/graphic/scene.cpp \
     src/command/movecommand.cpp \
@@ -29,6 +30,7 @@ HEADERS  += src/widgets/mainwindow.h \
     src/widgets/elementpanel.h \
     src/widgets/hierarchypanel.h \
     src/project.h \
+    src/application.h \
     src/level.h \
     src/dialogs/newprojectdialog.h \
     src/graphic/scene.h \
