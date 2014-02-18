@@ -16,7 +16,6 @@ void IOModule::saveTileset(QString resourcesPath, QString savePath){
         //Creation of the DOM
         m_saveTilesetPath = new QString(savePath);
         m_saveTilesetPath->append("/tileset.xml");
-        QDomDocument *dom = new QDomDocument("mon_xml");
 
         // Check up
         QFile xml_doc(m_saveTilesetPath->toStdString().c_str());
@@ -51,57 +50,39 @@ void IOModule::saveTileset(QString resourcesPath, QString savePath){
 }
 
 void IOModule::saveLevel(QString path, Scene* scene){
-//    QFileInfo* file = new QFileInfo(path);
-//    if (file->dir().exists()){
-//        qDebug() << "Saving level ...";
-//        TiXmlDocument mXmlDoc;
+    QFileInfo* file = new QFileInfo(path);
+    if (file->dir().exists()){
 
-//        // XML Declaration
-//        TiXmlDeclaration *mDecl = new TiXmlDeclaration ("1.0", "", "");
-//        mXmlDoc.LinkEndChild (mDecl);
+        // Check up
+        QFile xml_doc(path.toStdString().c_str());
+        if(!xml_doc.open(QIODevice::WriteOnly)){
+            // If troubles in opening the xml file
+            qDebug() <<"Opening : Erreur à l'ouverture du document XML";
+            return;
+        }
 
-//        // Map tag
-//        TiXmlElement *mXRoot = new TiXmlElement ("map");
-//        mXmlDoc.LinkEndChild (mXRoot);
+        QXmlStreamWriter stream(&xml_doc);
+        stream.setAutoFormatting(true);
+        stream.writeStartDocument();
 
-//        // Tileset
-//        TiXmlElement *mXTileset = new TiXmlElement ("tileset");
-//        mXRoot->LinkEndChild (mXTileset);
-//        mXTileset->SetAttribute("tileset_file", m_saveTilesetPath->toStdString().c_str());
+            stream.writeStartElement("map");
+                stream.writeStartElement("surfaces");
+                stream.writeStartElement("tileset");
+                stream.writeAttribute("tileset_file", m_saveTilesetPath->toStdString().c_str());
 
-//        // Iterate the nodes vector and write them to the XML
-//        TiXmlElement *mXNodes = new TiXmlElement ("nodes");
-//        mXRoot->LinkEndChild (mXNodes);
+                    stream.writeStartElement("nodes");
 
-//        //Retrieve all the items in a level
-//        QList<QGraphicsItem*> items = m_scene->items();
-//        for (int i = 0; i<items.count(); ++i){
-//            TiXmlElement *mXNode;
-//            mXNode = new TiXmlElement ("node");
-//            //mXNode->SetAttribute ("surface_id", (*mIter)->GetSurfaceId());
-//            mXNode->SetAttribute ("x", items.at(i)->pos().x() );
-//            mXNode->SetAttribute ("y", items.at(i)->pos().y() );
-//           /* mXNode->SetAttribute ("z", (*mIter)->GetEntity()->getPosZ());
-//            mXNode->SetAttribute ("layer", (*mIter)->GetLayer());
-//            mXNode->SetDoubleAttribute ("angle", (*mIter)->GetEntity()->getAngleZ());
-//            mXNode->SetDoubleAttribute ("scale", (*mIter)->GetEntity()->getScaleX());
-//            mXNode->SetAttribute ("trans", (*mIter)->GetEntity()->getTransparency());
-//            mXNode->SetAttribute ("mirror_x", (*mIter)->GetEntity()->getMirrorX());
-//            mXNode->SetAttribute ("mirror_y", (*mIter)->GetEntity()->getMirrorY());
-//            mXNode->SetAttribute ("tint_r", (*mIter)->GetEntity()->getTintR());
-//            mXNode->SetAttribute ("tint_g", (*mIter)->GetEntity()->getTintG());
-//            mXNode->SetAttribute ("tint_b", (*mIter)->GetEntity()->getTintB());
-//            mXNode->SetAttribute ("if_wrap", (*mIter)->GetEntity()->ifWrap());
-//            mXNode->SetAttribute ("region_width", (*mIter)->GetEntity()->getRegionWidth());
-//            mXNode->SetAttribute ("region_height", (*mIter)->GetEntity()->getRegionHeight());
-//            */
-//            mXNodes->LinkEndChild (mXNode);
-//        }
+                        //Retrieve all the items in a level
+                        QList<QGraphicsItem*> items = scene->items();
+                        for (int i = 0; i<items.count(); ++i){
+                            stream.writeStartElement("node");
+                            stream.writeAttribute("x", QString::number(items.at(i)->pos().x()));
+                            stream.writeAttribute("y", QString::number(items.at(i)->pos().y()));
+                            stream.writeEndElement();
+                        }
 
-//        bool returnValue = mXmlDoc.SaveFile(m_saveTilesetPath->toStdString().c_str());
-//        if (!returnValue){
-//            qDebug() << "failed to save the tileset.";
-//        }
+                stream.writeEndElement();
+            stream.writeEndDocument();
 
-//    }
+    }
 }

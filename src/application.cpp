@@ -175,13 +175,12 @@ void Application::loadLevel(){
 void Application::saveAll(){
 
     // Save the map to an XML file
-    QString* savePath = new QString(m_project->getSavePath());
-    savePath->append("/");
-    savePath->append(m_project->getCurrentLevel());
-    savePath->append(".xml");
-    qDebug() << "save path : " << *savePath;
+    QString savePath(m_project->getSavePath());
+    savePath.append("/");
+    savePath.append(m_project->getCurrentLevel());
+    savePath.append(".xml");
 
-    m_ioModule->saveLevel(m_project->getCurrentLevel(), m_mainWindow->getScene());
+    m_ioModule->saveLevel(savePath, m_mainWindow->getScene());
 
 }
 //!This function creates a level within the project context and set the main window ready to work
