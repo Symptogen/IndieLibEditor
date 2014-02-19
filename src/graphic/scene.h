@@ -23,12 +23,14 @@ public:
     void setBackground(QString path);
     void newEntity(QString name);
 
+    QList<GraphicalItem*> getGraphicalItems() const {return m_graphicalItemList;}
 signals:
     void newEntityAdded(GraphicalItem* item);
 
 private:
     QHash<QString, QGraphicsItemGroup*> m_itemGroupsList;
-    QString* m_defaultImagePath;
+    QString m_defaultImagePath;
+    QList<GraphicalItem*> m_graphicalItemList;
 
 
 };

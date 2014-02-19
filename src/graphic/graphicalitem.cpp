@@ -10,14 +10,16 @@
 #include <QGraphicsScene>
 #include <QGraphicsSceneMouseEvent>
 
-GraphicalItem::GraphicalItem(QString name, QPixmap pixmap)
+GraphicalItem::GraphicalItem(QString name, QString filePath)
 {
     this->setName(name);
-    this->setPixmap(pixmap);
+    QPixmap image(filePath);
+    this->setPixmap(image);
     this->acceptHoverEvents();
     this->setFlags(QGraphicsItem::ItemIsMovable | QGraphicsItem::ItemIsSelectable | QGraphicsItem::ItemIsFocusable | QGraphicsItem::ItemSendsGeometryChanges);
 
     m_oldOpacity = this->opacity();
+    m_filePath = filePath;
 }
 
 //! Store the position of the GraphicalItem before a movement appears

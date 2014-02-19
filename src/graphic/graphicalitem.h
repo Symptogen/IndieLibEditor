@@ -14,7 +14,7 @@ class GraphicalItem : public QGraphicsPixmapItem
 {
 public:
     enum { Type = UserType + 1 };
-    GraphicalItem(QString name, QPixmap pixmap);
+    GraphicalItem(QString name, QString filePath);
     int type() const{return Type;}
 
     //-------------- Event Handlers ---------------- //
@@ -24,10 +24,12 @@ public:
     //----------- Getter /Setter ---------------- //
     QString name(){return m_name;}
     void setName(QString name){m_name = name;}
+    QString getFilePath() const {return m_filePath;}
 
 private:
      QPointF m_oldPos;
      qreal m_oldOpacity;
      QString m_name;
+     QString m_filePath;
 };
 #endif // INDIELIB_EDITOR_GRAPHICAL_ITEM_H

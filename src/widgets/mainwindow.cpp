@@ -112,8 +112,10 @@ void MainWindow::setFinalCreationStep(){
     //Scene creation and connection with the element panel
     m_scene = new Scene(m_project->getLayerList(), this);
     m_elementPanel->setScene(m_scene);
-    bool value = QObject::connect(m_scene, SIGNAL(newEntityAdded(Entity*)), m_elementPanel, SLOT(newEntity(Entity*)));
-    qDebug() << "connection : " << value;
+//    bool value = QObject::connect(m_scene, SIGNAL(newEntityAdded(Entity*)), m_elementPanel, SLOT(newEntity(Entity*)));
+//    qDebug() << "connection : " << value;
+
+    m_scene->newEntity("bear");
 
     //Init the viewer with a proper title
     QWidget* titleBar = new QWidget();

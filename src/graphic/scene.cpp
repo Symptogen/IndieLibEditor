@@ -13,7 +13,7 @@
 Scene::Scene(QStringList layerList, QObject *parent):
     QGraphicsScene(parent)
 {
-    m_defaultImagePath = new QString( "C:/Users/Cecilia/Pictures/editorResources/set3/bearPurple.png");
+    m_defaultImagePath = "C:/Users/Cecilia/Pictures/editorResources/set3/bearPurple.png";
 
     //Create all the layers corresponding to the categories in the projet properties
     for(int i = 0; i<layerList.count(); ++i){
@@ -32,12 +32,12 @@ Scene::Scene(QStringList layerList, QObject *parent):
 //! Creates an entity and alert the panel to do so
 void Scene::newEntity(QString name){
 
-    QPixmap* image = new QPixmap(*m_defaultImagePath);
-    GraphicalItem* item = new GraphicalItem(name, *image);
+    GraphicalItem* item = new GraphicalItem(name, m_defaultImagePath);
+    m_graphicalItemList.append(item);
+    qDebug() << "newentity : " << m_graphicalItemList.size();
     this->addItem(item);
 
-    //Emit a signal
-    emit this->newEntityAdded(item);
+
     qDebug() << "New Entity in the scene aaaand it's gone !";
 }
 

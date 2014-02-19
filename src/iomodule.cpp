@@ -73,9 +73,11 @@ void IOModule::saveLevel(QString path, Scene* scene){
                     stream.writeStartElement("nodes");
 
                         //Retrieve all the items in a level
-                        QList<QGraphicsItem*> items = scene->items();
+                        QList<GraphicalItem*> items = scene->getGraphicalItems();
+                        qDebug() << "iomodule " << items.count() ;
                         for (int i = 0; i<items.count(); ++i){
                             stream.writeStartElement("node");
+                            stream.writeAttribute("surface_path", items.at(i)->getFilePath());
                             stream.writeAttribute("x", QString::number(items.at(i)->pos().x()));
                             stream.writeAttribute("y", QString::number(items.at(i)->pos().y()));
                             stream.writeEndElement();
