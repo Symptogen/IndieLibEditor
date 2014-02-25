@@ -88,3 +88,7 @@ void IOModule::saveLevel(QString path, Scene* scene){
 
     }
 }
+
+void IOModule::loadLevel(){
+
+}

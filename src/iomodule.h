@@ -11,6 +11,7 @@ public:
 
     void saveTileset(QString resourcesPath, QString savePath);
     void saveLevel(QString path, Scene *scene);
+    void loadLevel();
 
 private:
     QString* m_saveTilesetPath;
