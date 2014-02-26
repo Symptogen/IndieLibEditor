@@ -25,7 +25,8 @@ SOURCES += src/main.cpp\
     src/command/opacitycommand.cpp \
     src/widgets/entityelementpanel.cpp \
     src/iomodule.cpp \
-    src/graphic/graphicalitem.cpp
+    src/graphic/graphicalitem.cpp \
+    src/widgets/resourcesbrowserwidget.cpp
 
 HEADERS  += src/widgets/mainwindow.h \
     src/widgets/elementpanel.h \
@@ -40,4 +41,5 @@ HEADERS  += src/widgets/mainwindow.h \
     src/command/opacitycommand.h \
     src/widgets/entityelementpanel.h \
     src/iomodule.h \
-    src/graphic/graphicalitem.h
+    src/graphic/graphicalitem.h \
+    src/widgets/resourcesbrowserwidget.h

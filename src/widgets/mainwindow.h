@@ -21,6 +21,7 @@
 #include "../project.h"
 #include "../dialogs/newprojectdialog.h"
 #include "../command/invoker.h"
+#include "../widgets/resourcesbrowserwidget.h"
 
 class MainWindow : public QMainWindow
 {
@@ -58,10 +59,12 @@ private:
     QGraphicsView* m_viewer;
     Scene* m_scene;
     Project* m_project;
+    ResourcesBrowserWidget* m_resourcesBrowser;
 
     QDockWidget* m_elementDock;
     QDockWidget* m_hierarchyDock;
     QDockWidget* m_viewerDock;
+    QDockWidget* m_resourcesBrowserDock;
 
     //Menus
     QMenu* m_fileMenu;

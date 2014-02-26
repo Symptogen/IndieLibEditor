@@ -64,10 +64,20 @@ void MainWindow::initDockWidgets(){
     m_viewerDock->setWidget(m_viewer);
     m_viewerDock->setFeatures(QDockWidget::NoDockWidgetFeatures);
 
+    //Resources Browser Widget
+    m_resourcesBrowser = new ResourcesBrowserWidget();
+    m_resourcesBrowserDock = new QDockWidget(this->tr("Project"), this);
+    m_resourcesBrowserDock->setAllowedAreas(Qt::BottomDockWidgetArea | Qt::TopDockWidgetArea);
+    m_resourcesBrowserDock->setWidget(m_resourcesBrowser);
+    m_resourcesBrowserDock->setFeatures(QDockWidget::DockWidgetMovable | QDockWidget::DockWidgetClosable);
+
     //Add the dock to the main window
+
+    this->addDockWidget(Qt::BottomDockWidgetArea, m_resourcesBrowserDock);
     this->addDockWidget(Qt::LeftDockWidgetArea, m_viewerDock);
     this->addDockWidget(Qt::RightDockWidgetArea, m_hierarchyDock);
     this->addDockWidget(Qt::RightDockWidgetArea, m_elementDock);
+
 }
 
 //!Function that set up the status bar
@@ -115,7 +125,10 @@ void MainWindow::setFinalCreationStep(){
 //    bool value = QObject::connect(m_scene, SIGNAL(newEntityAdded(Entity*)), m_elementPanel, SLOT(newEntity(Entity*)));
 //    qDebug() << "connection : " << value;
 
-    m_scene->newEntity("bear");
+    //m_scene->newEntity("bear");
+
+    //Set the browser to the correct directory
+    m_resourcesBrowser->setResourcesDir(m_project->getResourcesPath());
 
     //Init the viewer with a proper title
     QWidget* titleBar = new QWidget();

@@ -21,7 +21,7 @@ public:
     void createLayer(QString name);
     QGraphicsItemGroup* getGroup(QString name);
     void setBackground(QString path);
-    void newEntity(QString name);
+    void newEntity(QString name, QString path);
 
     QList<GraphicalItem*> getGraphicalItems() const {return m_graphicalItemList;}
 signals:
@@ -29,7 +29,6 @@ signals:
 
 private:
     QHash<QString, QGraphicsItemGroup*> m_itemGroupsList;
-    QString m_defaultImagePath;
     QList<GraphicalItem*> m_graphicalItemList;
 
 
