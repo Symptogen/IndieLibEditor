@@ -12,6 +12,10 @@
 EntityElementPanel::EntityElementPanel(GraphicalItem* item, QWidget* parent):
     QWidget(parent)
 {
+    this->setMinimumWidth(50);
+    this->setMaximumWidth(200);
+    this->setMinimumHeight(100);
+    this->setMaximumHeight(400);
     m_entity = item;
     this->init();
     //this->setStyleSheet("background: #222222;");

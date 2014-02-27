@@ -5,7 +5,8 @@
 
 ResourcesBrowserWidget::ResourcesBrowserWidget()
 {
-
+    setMinimumHeight(50);
+    setMaximumHeight(300);
 }
 
 void ResourcesBrowserWidget::setResourcesDir(QString resourcesDir){
@@ -18,6 +19,8 @@ void ResourcesBrowserWidget::setResourcesDir(QString resourcesDir){
     QFileSystemModel* fileModel = new QFileSystemModel;
     fileModel->setFilter(QDir::Dirs|QDir::NoDotAndDotDot);
     fileModel->setRootPath(currentDir.path());
+
+    m_iconProvider = new CustomIconProvider();
 
     m_fileBrowser = new QTreeView();
     m_fileBrowser->setModel(fileModel);
@@ -35,6 +38,7 @@ void ResourcesBrowserWidget::setResourcesDir(QString resourcesDir){
 
     // Assets Browser
     QFileSystemModel* resourcesModel = new QFileSystemModel;
+    resourcesModel->setIconProvider(m_iconProvider);
     resourcesModel->setRootPath(m_resourcesDir);
 
     m_assetsBrowser = new QListView();
@@ -54,8 +58,22 @@ void ResourcesBrowserWidget::updateAssetsBrowser( const QModelIndex & current, c
     QString newDir = currentDir.path() + QDir::separator() + current.data(0).toString();
 
     QFileSystemModel* resourcesModel = new QFileSystemModel;
+    resourcesModel->setIconProvider(m_iconProvider);
     resourcesModel->setRootPath(newDir);
     m_assetsBrowser->setModel(resourcesModel);
     m_assetsBrowser->setRootIndex(resourcesModel->index(newDir));
 
+}
+//---------------------------------------------------------------------------------------------------------------//
+
+QIcon CustomIconProvider::icon(const QFileInfo &info) const
+{
+    static QPixmapCache cache;
+    const QString filepath = info.canonicalFilePath();
+    QPixmap pixmap;
+    if (!cache.find(filepath, &pixmap)) {
+        pixmap.load(filepath);
+        cache.insert(filepath, pixmap);
+    }
+    return pixmap.isNull() ? QFileIconProvider::icon(info) : QIcon(pixmap);
 }

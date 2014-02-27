@@ -5,6 +5,19 @@
 #include <QTreeView>
 #include <QListView>
 #include <QFileSystemModel>
+#include <QPixmapCache>
+#include <QFileIconProvider>
+
+//------------------------------------- ICON PROVIDER ------------------------------------------------//
+class CustomIconProvider : public QFileIconProvider
+{
+public:
+    CustomIconProvider():QFileIconProvider(){}
+    virtual ~CustomIconProvider(){}
+protected:
+    QIcon icon(const QFileInfo &info) const;
+};
+//------------------------------------------------------------------------------------------------//
 
 class ResourcesBrowserWidget : public QWidget
 {
@@ -22,6 +35,9 @@ private:
     QLayout* m_layout;
     QTreeView* m_fileBrowser;
     QListView* m_assetsBrowser;
+    CustomIconProvider* m_iconProvider;
 };
+
+
 
 #endif // RESOURCESBROWSERWIDGET_H

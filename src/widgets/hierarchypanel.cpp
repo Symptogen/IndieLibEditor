@@ -10,7 +10,8 @@
 
 HierarchyPanel::HierarchyPanel()
 {
-    this->setMinimumWidth(200);
-    this->setMaximumWidth(300);
-    this->setMinimumHeight(100);
+    this->setMinimumWidth(50);
+    this->setMaximumWidth(200);
+    this->setMinimumHeight(50);
+    this->setMaximumHeight(200);
 }

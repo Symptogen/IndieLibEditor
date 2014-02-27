@@ -60,23 +60,28 @@ void MainWindow::initDockWidgets(){
     //Viewer Widget
     m_viewer = new QGraphicsView();
     m_viewerDock = new QDockWidget(this->tr(""), this);
-    m_viewerDock->setAllowedAreas(Qt::LeftDockWidgetArea);
+    m_viewerDock->setAllowedAreas(Qt::TopDockWidgetArea);
     m_viewerDock->setWidget(m_viewer);
     m_viewerDock->setFeatures(QDockWidget::NoDockWidgetFeatures);
 
     //Resources Browser Widget
     m_resourcesBrowser = new ResourcesBrowserWidget();
     m_resourcesBrowserDock = new QDockWidget(this->tr("Project"), this);
-    m_resourcesBrowserDock->setAllowedAreas(Qt::BottomDockWidgetArea | Qt::TopDockWidgetArea);
+    m_resourcesBrowserDock->setAllowedAreas(Qt::BottomDockWidgetArea | Qt::LeftDockWidgetArea);
     m_resourcesBrowserDock->setWidget(m_resourcesBrowser);
     m_resourcesBrowserDock->setFeatures(QDockWidget::DockWidgetMovable | QDockWidget::DockWidgetClosable);
 
     //Add the dock to the main window
-
+    this->setCorner( Qt::BottomRightCorner, Qt::RightDockWidgetArea );
+    this->setCorner( Qt::BottomLeftCorner, Qt::BottomDockWidgetArea );
+    this->setCorner( Qt::TopLeftCorner, Qt::TopDockWidgetArea );
+    this->setCorner( Qt::TopRightCorner, Qt::RightDockWidgetArea );
+    this->addDockWidget(Qt::TopDockWidgetArea, m_viewerDock);
     this->addDockWidget(Qt::BottomDockWidgetArea, m_resourcesBrowserDock);
-    this->addDockWidget(Qt::LeftDockWidgetArea, m_viewerDock);
     this->addDockWidget(Qt::RightDockWidgetArea, m_hierarchyDock);
     this->addDockWidget(Qt::RightDockWidgetArea, m_elementDock);
+
+
 
 }
 
