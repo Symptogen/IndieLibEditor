@@ -1,6 +1,8 @@
 #include "resourcesbrowserwidget.h"
 #include <QHBoxLayout>
 
+#include <QDebug>
+
 ResourcesBrowserWidget::ResourcesBrowserWidget()
 {
 
@@ -24,7 +26,7 @@ void ResourcesBrowserWidget::setResourcesDir(QString resourcesDir){
     m_fileBrowser->hideColumn(1);
     m_fileBrowser->hideColumn(2);
     m_fileBrowser->hideColumn(3);
-    connect(m_fileBrowser, SIGNAL(currentChanged()), this, SLOT(updateAssetsBrowser()));
+    QObject::connect(m_fileBrowser->selectionModel(), SIGNAL(currentChanged(const QModelIndex &, const QModelIndex &)), this, SLOT(updateAssetsBrowser(const QModelIndex &, const QModelIndex &)));
 
     m_layout = new QHBoxLayout();
     m_layout->addWidget(m_fileBrowser);
@@ -33,12 +35,13 @@ void ResourcesBrowserWidget::setResourcesDir(QString resourcesDir){
     m_assetsBrowser = new QListView();
     m_assetsBrowser->setViewMode(QListView::IconMode);
     m_assetsBrowser->setModel(m_fileModel);
-    m_assetsBrowser->setRootIndex(m_fileModel->index(currentDir.path()));
+    m_assetsBrowser->setRootIndex(m_fileModel->index(m_resourcesDir));
     m_layout->addWidget(m_assetsBrowser);
 
     setLayout(m_layout);
 }
 
 void ResourcesBrowserWidget::updateAssetsBrowser( const QModelIndex & current, const QModelIndex & previous ){
+    qDebug() << "current changed " ;
     m_assetsBrowser->setCurrentIndex(current);
 }

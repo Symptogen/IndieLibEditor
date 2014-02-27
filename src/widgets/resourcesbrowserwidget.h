@@ -13,6 +13,8 @@ public:
     ResourcesBrowserWidget();
 
     void setResourcesDir(QString resourcesDir);
+
+public slots:
     void updateAssetsBrowser( const QModelIndex & current, const QModelIndex & previous );
 
 private:
