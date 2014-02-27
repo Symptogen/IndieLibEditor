@@ -22,7 +22,6 @@ private:
     QLayout* m_layout;
     QTreeView* m_fileBrowser;
     QListView* m_assetsBrowser;
-    QFileSystemModel* m_fileModel;
 };
 
 #endif // RESOURCESBROWSERWIDGET_H
