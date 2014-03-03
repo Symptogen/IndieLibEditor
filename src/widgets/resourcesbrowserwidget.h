@@ -29,6 +29,7 @@ public:
 
 public slots:
     void updateAssetsBrowser( const QModelIndex & current, const QModelIndex & previous );
+    void updateFileBrowser(const QModelIndex & selected);
 
 private:
     QString m_resourcesDir;

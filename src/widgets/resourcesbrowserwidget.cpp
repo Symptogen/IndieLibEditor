@@ -48,21 +48,29 @@ void ResourcesBrowserWidget::setResourcesDir(QString resourcesDir){
     m_assetsBrowser->setModel(resourcesModel);
     m_assetsBrowser->setRootIndex(resourcesModel->index(m_resourcesDir));
     m_layout->addWidget(m_assetsBrowser);
+    QObject::connect(m_assetsBrowser, SIGNAL(doubleClicked(const QModelIndex &)), this, SLOT(updateFileBrowser(const QModelIndex &)));
 
     setLayout(m_layout);
 }
 
+// Slot called when a directory from the fileBrowser is selected, and that update the resourcesBrowser
 void ResourcesBrowserWidget::updateAssetsBrowser( const QModelIndex & current, const QModelIndex & previous ){
-    QDir currentDir = QDir(m_resourcesDir);
-    currentDir.cdUp();
-    QString newDir = currentDir.path() + QDir::separator() + current.data(0).toString();
-
+    //Creation of a new model for updating the view
     QFileSystemModel* resourcesModel = new QFileSystemModel;
     resourcesModel->setIconProvider(m_iconProvider);
-    resourcesModel->setRootPath(newDir);
+    //Setting the path selected as root for the new model
+    resourcesModel->setRootPath(current.data(Qt::UserRole + 1).toString());
+    // Update the view
     m_assetsBrowser->setModel(resourcesModel);
-    m_assetsBrowser->setRootIndex(resourcesModel->index(newDir));
+    m_assetsBrowser->setRootIndex(resourcesModel->index(current.data(Qt::UserRole + 1).toString()));
 
+}
+
+// Slot called on a double click event on a directory of the resources Browser, and that select the corresponding index in the fileBrowser
+void ResourcesBrowserWidget::updateFileBrowser( const QModelIndex & selected ){
+    if(static_cast<QFileSystemModel*>(m_fileBrowser->model())->isDir(selected)){
+        m_fileBrowser->setCurrentIndex(static_cast<QFileSystemModel*>(m_fileBrowser->model())->index(selected.data(Qt::UserRole + 1).toString()));
+    }
 }
 //---------------------------------------------------------------------------------------------------------------//
 
