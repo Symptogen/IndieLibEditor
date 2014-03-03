@@ -21,11 +21,18 @@ public:
     void createLayer(QString name);
     QGraphicsItemGroup* getGroup(QString name);
     void setBackground(QString path);
-    void newEntity(QString name, QString path);
+    void newEntity(QString name, QString path, int x=0, int y=0);
 
     QList<GraphicalItem*> getGraphicalItems() const {return m_graphicalItemList;}
 signals:
     void newEntityAdded(GraphicalItem* item);
+
+
+public:
+    virtual void dragEnterEvent ( QGraphicsSceneDragDropEvent * event );
+    virtual void dragLeaveEvent ( QGraphicsSceneDragDropEvent * event );
+    virtual void dragMoveEvent ( QGraphicsSceneDragDropEvent * event );
+    virtual void dropEvent ( QGraphicsSceneDragDropEvent * event );
 
 private:
     QHash<QString, QGraphicsItemGroup*> m_itemGroupsList;

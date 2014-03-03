@@ -38,25 +38,17 @@ NewProjectDialog::NewProjectDialog(QWidget *parent) :
 void NewProjectDialog::createMainPage(){
     m_mainPage->setFinalPage(false);
     m_mainPage->setTitle("Project Informations");
-    m_mainPage->setSubTitle("This wizard will help you create a new project, please fill it in.");
+    m_mainPage->setSubTitle("This wizard will help you create a new project, from an existing assets directory or from sratch.");
 
     //Project Name
-    m_projectNameLabel = new QLabel(this->tr("&Project name:"));
+    m_projectNameLabel = new QLabel(this->tr("&Project name (for the editor saving file) :"));
     m_projectNameLineEdit = new QLineEdit;
     m_projectNameLabel->setBuddy(m_projectNameLineEdit);
 
-    //Project location
-    m_projectSavePathLabel = new QLabel(this->tr("&Project save location:"));
-    m_projectSavePathLineEdit = new QLineEdit;
-    m_projectSavePathLabel->setBuddy(m_projectSavePathLineEdit);
-
-    //Browse button
-    m_browseSave = new QPushButton("...");
-    this->connect(m_browseSave, SIGNAL(clicked()), this, SLOT(browseDialog()));
-
     //Resources Location
-    m_projectResourcesPathLabel = new QLabel(this->tr("&Resources location:"));
+    m_projectResourcesPathLabel = new QLabel(this->tr("&Assets location (the root of the assets directories if there are several):"));
     m_projectResourcesPathLineEdit = new QLineEdit;
+    connect(m_projectResourcesPathLineEdit, SIGNAL(textChanged(QString)), m_projectResourcesPathLineEdit, SLOT(setText(QString)));
     m_projectResourcesPathLabel->setBuddy(m_projectResourcesPathLineEdit);
 
     //Browse button
@@ -66,13 +58,10 @@ void NewProjectDialog::createMainPage(){
     //Layout
     QGridLayout* layout = new QGridLayout();
     layout->addWidget(m_projectNameLabel, 0, 0);
-    layout->addWidget(m_projectNameLineEdit, 0, 1);
-    layout->addWidget(m_projectSavePathLabel, 1, 0);
-    layout->addWidget(m_projectSavePathLineEdit, 1, 1);
-    layout->addWidget(m_browseSave, 1, 2);
+    layout->addWidget(m_projectNameLineEdit, 1, 0);
     layout->addWidget(m_projectResourcesPathLabel, 2, 0);
-    layout->addWidget(m_projectResourcesPathLineEdit, 2, 1);
-    layout->addWidget(m_browseResources, 2, 2);
+    layout->addWidget(m_projectResourcesPathLineEdit, 3, 0);
+    layout->addWidget(m_browseResources, 3, 1);
 
     m_mainPage->setLayout(layout);
 }
@@ -122,14 +111,8 @@ void NewProjectDialog::createLayerPage(){
 
 //! Open a browse file dialog and copy the selection into the correct line edit following which button called the dialog
 void NewProjectDialog::browseDialog(){
-    QObject* sender = QObject::sender();
-    if (sender == m_browseSave){
-        QString folder = QFileDialog::getExistingDirectory(this, this->tr("Choose a folder"), "/home/cecilia");
-        m_projectSavePathLineEdit->setText(folder);
-    }else if(sender == m_browseResources){
-        QString folder = QFileDialog::getExistingDirectory(this, this->tr("Select the resources folder"), "/home/cecilia");
-        m_projectResourcesPathLineEdit->setText(folder);
-    }
+    QString folder = QFileDialog::getExistingDirectory(this, this->tr("Select the resources folder"), "/home/cecilia");
+    m_projectResourcesPathLineEdit->setText(folder);
 }
 
 //!This Slot is called when the user clicks the add entry button, it taked the value of the line edit to update the layer list.
@@ -180,10 +163,6 @@ void NewProjectDialog::selected(QModelIndex index){
 //----------------- GETTER ----------------------- //
 QString NewProjectDialog::getResourcesPath(){
     return m_projectResourcesPathLineEdit->text();
-}
-
-QString NewProjectDialog::getSavePath(){
-    return m_projectSavePathLineEdit->text();
 }
 
 QString NewProjectDialog::getProjectName(){

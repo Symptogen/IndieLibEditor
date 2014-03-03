@@ -58,7 +58,7 @@ void MainWindow::initDockWidgets(){
     m_elementDock->setFeatures(QDockWidget::DockWidgetMovable | QDockWidget::DockWidgetClosable);
 
     //Viewer Widget
-    m_viewer = new QGraphicsView();
+    m_viewer = new QGraphicsView(this);
     m_viewerDock = new QDockWidget(this->tr(""), this);
     m_viewerDock->setAllowedAreas(Qt::TopDockWidgetArea);
     m_viewerDock->setWidget(m_viewer);
@@ -66,7 +66,7 @@ void MainWindow::initDockWidgets(){
 
     //Resources Browser Widget
     m_resourcesBrowser = new ResourcesBrowserWidget();
-    m_resourcesBrowserDock = new QDockWidget(this->tr("Project"), this);
+    m_resourcesBrowserDock = new QDockWidget(this->tr("Assets"), this);
     m_resourcesBrowserDock->setAllowedAreas(Qt::BottomDockWidgetArea | Qt::LeftDockWidgetArea);
     m_resourcesBrowserDock->setWidget(m_resourcesBrowser);
     m_resourcesBrowserDock->setFeatures(QDockWidget::DockWidgetMovable | QDockWidget::DockWidgetClosable);
@@ -120,20 +120,12 @@ void MainWindow::initMenu(){
 
 }
 
-
 //! When a level is created, we can set  the final steps for the window creation and connect widgets between one another
 void MainWindow::setFinalCreationStep(){
 
     //Scene creation and connection with the element panel
     m_scene = new Scene(m_project->getLayerList(), this);
     m_elementPanel->setScene(m_scene);
-//    bool value = QObject::connect(m_scene, SIGNAL(newEntityAdded(Entity*)), m_elementPanel, SLOT(newEntity(Entity*)));
-//    qDebug() << "connection : " << value;
-
-    //m_scene->newEntity("bear");
-
-    //Set the browser to the correct directory
-    m_resourcesBrowser->setResourcesDir(m_project->getResourcesPath());
 
     //Init the viewer with a proper title
     QWidget* titleBar = new QWidget();

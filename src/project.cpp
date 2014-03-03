@@ -7,9 +7,15 @@
 #include <QDebug>
 #include "project.h"
 
-Project::Project(QString name, QString savePath, QString resourcePath, QStringList layerList)
-    : m_name(name), m_savePath(savePath), m_resourcesPath(resourcePath), m_layerList(layerList)
+#include <QDir>
+
+Project::Project(QString name, QString resourcePath, QStringList layerList)
+    : m_name(name), m_resourcesPath(resourcePath), m_layerList(layerList)
 {
+    //Create a sub-directory for the levels
+    QDir* resourcesDir = new QDir(m_resourcesPath);
+    resourcesDir->mkdir("levels");
+    m_savePath = m_resourcesPath + QDir::separator() + "levels";
 }
 
 //! Add a new level to the list of levels

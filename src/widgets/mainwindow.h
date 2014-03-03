@@ -39,16 +39,16 @@ public:
     void setFinalCreationStep();
 
     //Setters
-    void setProject(Project* project) {m_project = project;}
-    void setNewProjectAction(QAction* action) {m_newProjectAction = action;}
-    void setOpenProjectAction(QAction* action) {m_openProjectAction = action;}
-    void setNewLevelAction(QAction* action) {m_newLevelAction = action;}
-    void setLoadLevelAction(QAction* action) {m_loadLevelAction = action;}
-    void setSaveAllAction(QAction* action) {m_saveAllAction = action;}
-    void setQuitAction(QAction* action) {m_quitAction = action;}
-    void setProjectOptionsAction(QAction* action) {m_projectOptionsAction = action;}
-    void setUndoAction(QAction* action) {m_undoAction = action;}
-    void setRedoAction(QAction* action) {m_redoAction = action;}
+    inline void setProject(Project* project) {m_project = project; m_resourcesBrowser->setResourcesDir(m_project->getResourcesPath());}
+    inline void setNewProjectAction(QAction* action) {m_newProjectAction = action;}
+    inline void setOpenProjectAction(QAction* action) {m_openProjectAction = action;}
+    inline void setNewLevelAction(QAction* action) {m_newLevelAction = action;}
+    inline void setLoadLevelAction(QAction* action) {m_loadLevelAction = action;}
+    inline void setSaveAllAction(QAction* action) {m_saveAllAction = action;}
+    inline void setQuitAction(QAction* action) {m_quitAction = action;}
+    inline void setProjectOptionsAction(QAction* action) {m_projectOptionsAction = action;}
+    inline void setUndoAction(QAction* action) {m_undoAction = action;}
+    inline void setRedoAction(QAction* action) {m_redoAction = action;}
 
     //Getter
     Scene* getScene() const {return m_scene;}

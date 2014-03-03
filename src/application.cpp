@@ -153,7 +153,7 @@ void Application::newProject(){
 
     //Update the mainWindow and create a project if the dialog succeded
     if (returnValue == 1){
-        m_project = new Project(wizard->getProjectName(), wizard->getSavePath(), wizard->getResourcesPath(), wizard->getLayerList());
+        m_project = new Project(wizard->getProjectName(), wizard->getResourcesPath(), wizard->getLayerList());
         m_mainWindow->setProject(m_project);
 
         //Updating the actions now a project has been created

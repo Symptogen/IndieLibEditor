@@ -59,11 +59,6 @@ private:
     QLabel* m_projectNameLabel;
     QLineEdit* m_projectNameLineEdit;
 
-    //Location
-    QLabel* m_projectSavePathLabel;
-    QLineEdit* m_projectSavePathLineEdit;
-    QPushButton* m_browseSave;
-
     //Resources
     QLabel* m_projectResourcesPathLabel;
     QLineEdit* m_projectResourcesPathLineEdit;

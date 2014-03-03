@@ -33,6 +33,11 @@ void ResourcesBrowserWidget::setResourcesDir(QString resourcesDir){
     m_fileBrowser->hideColumn(3);
     QObject::connect(m_fileBrowser->selectionModel(), SIGNAL(currentChanged(const QModelIndex &, const QModelIndex &)), this, SLOT(updateAssetsBrowser(const QModelIndex &, const QModelIndex &)));
 
+    //Drag and drop specifications
+    m_fileBrowser->setDragEnabled(true);
+    m_fileBrowser->setAcceptDrops(false);
+    m_fileBrowser->setDragDropMode(QAbstractItemView::DragOnly);
+
     m_layout = new QHBoxLayout();
     m_layout->addWidget(m_fileBrowser);
 
@@ -72,6 +77,7 @@ void ResourcesBrowserWidget::updateFileBrowser( const QModelIndex & selected ){
         m_fileBrowser->setCurrentIndex(static_cast<QFileSystemModel*>(m_fileBrowser->model())->index(selected.data(Qt::UserRole + 1).toString()));
     }
 }
+
 //---------------------------------------------------------------------------------------------------------------//
 
 QIcon CustomIconProvider::icon(const QFileInfo &info) const

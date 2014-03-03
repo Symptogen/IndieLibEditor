@@ -16,7 +16,7 @@
 class Project
 {
 public:
-    Project(QString name, QString savePath, QString resourcePath, QStringList layerList);
+    Project(QString name, QString resourcePath, QStringList layerList);
 
     //void addLayerItem(QString name, int pos);
     void addLevel(QString name);

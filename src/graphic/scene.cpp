@@ -8,11 +8,16 @@
 #include <QGraphicsView>
 #include <QGraphicsPixmapItem>
 #include <QDebug>
+#include <QMimeData>
+#include <QDir>
+#include <QFileInfo>
 #include "scene.h"
 
 Scene::Scene(QStringList layerList, QObject *parent):
     QGraphicsScene(parent)
 {
+
+    //Drag and drop
 
     //Create all the layers corresponding to the categories in the projet properties
     for(int i = 0; i<layerList.count(); ++i){
@@ -29,12 +34,12 @@ Scene::Scene(QStringList layerList, QObject *parent):
 }
 
 //! Creates an entity and alert the panel to do so
-void Scene::newEntity(QString name, QString path){
+void Scene::newEntity(QString name, QString path, int x, int y){
 
     GraphicalItem* item = new GraphicalItem(name, path);
+    item->setPos(x, y);
     m_graphicalItemList.append(item);
-    qDebug() << "newentity : " << m_graphicalItemList.size();
-    this->addItem(item);
+    addItem(item);
 }
 
 //! TEMPORARY
@@ -52,5 +57,27 @@ void Scene::createLayer(QString name){
 
 QGraphicsItemGroup* Scene::getGroup(QString name){
     return m_itemGroupsList.find(name).value();
+}
+
+void Scene::dragEnterEvent ( QGraphicsSceneDragDropEvent * event )
+{
+    qDebug() << "scene drag enter";
+}
+
+void Scene::dragLeaveEvent ( QGraphicsSceneDragDropEvent * event )
+{
+    qDebug() << "scene drag leave";
+}
+
+void Scene::dragMoveEvent ( QGraphicsSceneDragDropEvent * event )
+{
+    qDebug() << "scene drag move";
+}
+
+
+void Scene::dropEvent ( QGraphicsSceneDragDropEvent * event )
+{
+    QFileInfo* file = new QFileInfo(event->mimeData()->text());
+    newEntity(file->baseName(), file->filePath().split("file:///")[1], event->scenePos().x(), event->scenePos().y());
 }
 
