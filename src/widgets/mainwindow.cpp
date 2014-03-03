@@ -43,6 +43,10 @@ void MainWindow::closeEvent(QCloseEvent *event)
 //!Function that instanciate the two dock widgets needed for the editor : the element dock and the hierarchy dock
 void MainWindow::initDockWidgets(){
 
+    //Central Widget
+    m_viewer = new QGraphicsView(this);
+    setCentralWidget(m_viewer);
+
     //Element Dock Widget
     m_hierarchyPanel = new HierarchyPanel();
     m_hierarchyDock = new QDockWidget(this->tr("Hierarchy Panel"), this);
@@ -57,13 +61,6 @@ void MainWindow::initDockWidgets(){
     m_elementDock->setWidget(m_elementPanel);
     m_elementDock->setFeatures(QDockWidget::DockWidgetMovable | QDockWidget::DockWidgetClosable);
 
-    //Viewer Widget
-    m_viewer = new QGraphicsView(this);
-    m_viewerDock = new QDockWidget(this->tr(""), this);
-    m_viewerDock->setAllowedAreas(Qt::TopDockWidgetArea);
-    m_viewerDock->setWidget(m_viewer);
-    m_viewerDock->setFeatures(QDockWidget::NoDockWidgetFeatures);
-
     //Resources Browser Widget
     m_resourcesBrowser = new ResourcesBrowserWidget();
     m_resourcesBrowserDock = new QDockWidget(this->tr("Assets"), this);
@@ -73,15 +70,9 @@ void MainWindow::initDockWidgets(){
 
     //Add the dock to the main window
     this->setCorner( Qt::BottomRightCorner, Qt::RightDockWidgetArea );
-    this->setCorner( Qt::BottomLeftCorner, Qt::BottomDockWidgetArea );
-    this->setCorner( Qt::TopLeftCorner, Qt::TopDockWidgetArea );
-    this->setCorner( Qt::TopRightCorner, Qt::RightDockWidgetArea );
-    this->addDockWidget(Qt::TopDockWidgetArea, m_viewerDock);
     this->addDockWidget(Qt::BottomDockWidgetArea, m_resourcesBrowserDock);
     this->addDockWidget(Qt::RightDockWidgetArea, m_hierarchyDock);
     this->addDockWidget(Qt::RightDockWidgetArea, m_elementDock);
-
-
 
 }
 
@@ -127,12 +118,8 @@ void MainWindow::setFinalCreationStep(){
     m_scene = new Scene(m_project->getLayerList(), this);
     m_elementPanel->setScene(m_scene);
 
-    //Init the viewer with a proper title
-    QWidget* titleBar = new QWidget();
-    QVBoxLayout* layout = new QVBoxLayout();
-    QLabel* label = new QLabel(m_project->getName().toLocal8Bit() + m_project->getCurrentLevel().toLocal8Bit());
-    layout->addWidget(label);
-    titleBar->setLayout(layout);
-    m_viewerDock->setTitleBarWidget(titleBar);
+    //Window title
+    setWindowTitle("Indielib Editor | " + m_project->getName() + " - " + m_project->getCurrentLevel());
+
     m_viewer->setScene(m_scene);
 }

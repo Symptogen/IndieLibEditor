@@ -5,7 +5,7 @@
 
 ResourcesBrowserWidget::ResourcesBrowserWidget()
 {
-    setMinimumHeight(50);
+    setMinimumHeight(100);
     setMaximumHeight(300);
 }
 
@@ -40,6 +40,8 @@ void ResourcesBrowserWidget::setResourcesDir(QString resourcesDir){
 
     m_layout = new QHBoxLayout();
     m_layout->addWidget(m_fileBrowser);
+    m_layout->setContentsMargins(0, 0, 0, 0);
+    m_layout->setSpacing(0);
 
     // Assets Browser
     QFileSystemModel* resourcesModel = new QFileSystemModel;

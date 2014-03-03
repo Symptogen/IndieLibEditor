@@ -41,12 +41,12 @@ void NewProjectDialog::createMainPage(){
     m_mainPage->setSubTitle("This wizard will help you create a new project, from an existing assets directory or from sratch.");
 
     //Project Name
-    m_projectNameLabel = new QLabel(this->tr("&Project name (for the editor saving file) :"));
+    m_projectNameLabel = new QLabel(this->tr("&Project name :"));
     m_projectNameLineEdit = new QLineEdit;
     m_projectNameLabel->setBuddy(m_projectNameLineEdit);
 
     //Resources Location
-    m_projectResourcesPathLabel = new QLabel(this->tr("&Assets location (the root of the assets directories if there are several):"));
+    m_projectResourcesPathLabel = new QLabel(this->tr("&Assets root dir :"));
     m_projectResourcesPathLineEdit = new QLineEdit;
     connect(m_projectResourcesPathLineEdit, SIGNAL(textChanged(QString)), m_projectResourcesPathLineEdit, SLOT(setText(QString)));
     m_projectResourcesPathLabel->setBuddy(m_projectResourcesPathLineEdit);
@@ -58,10 +58,10 @@ void NewProjectDialog::createMainPage(){
     //Layout
     QGridLayout* layout = new QGridLayout();
     layout->addWidget(m_projectNameLabel, 0, 0);
-    layout->addWidget(m_projectNameLineEdit, 1, 0);
-    layout->addWidget(m_projectResourcesPathLabel, 2, 0);
-    layout->addWidget(m_projectResourcesPathLineEdit, 3, 0);
-    layout->addWidget(m_browseResources, 3, 1);
+    layout->addWidget(m_projectNameLineEdit, 0, 1);
+    layout->addWidget(m_projectResourcesPathLabel, 1, 0);
+    layout->addWidget(m_projectResourcesPathLineEdit, 1, 1);
+    layout->addWidget(m_browseResources, 1, 2);
 
     m_mainPage->setLayout(layout);
 }

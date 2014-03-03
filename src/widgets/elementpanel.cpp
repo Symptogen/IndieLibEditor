@@ -14,9 +14,10 @@
 
 ElementPanel::ElementPanel()
 {
-    this->setMinimumWidth(200);
-    this->setMaximumWidth(300);
-    this->setMinimumHeight(300);
+    this->setMinimumWidth(150);
+    this->setMaximumWidth(400);
+    this->setMinimumHeight(100);
+    this->setMaximumHeight(400);
     m_entityStacked = new QStackedWidget();
     m_backgroundStacked = new QStackedWidget();
     this->addWidget(m_entityStacked);
