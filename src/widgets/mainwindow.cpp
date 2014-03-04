@@ -119,6 +119,7 @@ void MainWindow::setFinalCreationStep(){
     m_panelWidget->init();
 
     connect(m_scene, SIGNAL(newEntity()), m_panelWidget, SLOT(newEntityWidget()));
+    connect(m_scene, SIGNAL(selectedItemsChanged(QList<QGraphicsItem *>)), m_panelWidget, SLOT(setCurrentSelectionWidget(QList<QGraphicsItem *>)));
 
     //Window title
     setWindowTitle("Indielib Editor | " + m_project->getName() + " - " + m_project->getCurrentLevel());

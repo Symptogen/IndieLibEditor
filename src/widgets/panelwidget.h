@@ -18,6 +18,7 @@ public:
 
 public slots:
     void newEntityWidget();
+    void setCurrentSelectionWidget(QList<QGraphicsItem *> items);
 
 private:
     QStackedWidget* m_entityWidgetStack;

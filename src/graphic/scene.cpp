@@ -32,6 +32,8 @@ Scene::Scene(QStringList layerList, QObject *parent):
     QGraphicsPixmapItem* background= new QGraphicsPixmapItem(*imageBackground);
     this->addItem(background);
 
+    connect(this, SIGNAL(selectionChanged()), this, SLOT(emitNewSelection()));
+
 }
 
 //! Creates an entity and alert the panel to do so
@@ -63,17 +65,17 @@ QGraphicsItemGroup* Scene::getGroup(QString name){
 
 void Scene::dragEnterEvent ( QGraphicsSceneDragDropEvent * event )
 {
-    qDebug() << "scene drag enter";
+
 }
 
 void Scene::dragLeaveEvent ( QGraphicsSceneDragDropEvent * event )
 {
-    qDebug() << "scene drag leave";
+
 }
 
 void Scene::dragMoveEvent ( QGraphicsSceneDragDropEvent * event )
 {
-    qDebug() << "scene drag move";
+
 }
 
 
@@ -81,5 +83,9 @@ void Scene::dropEvent ( QGraphicsSceneDragDropEvent * event )
 {
     QFileInfo* file = new QFileInfo(event->mimeData()->text());
     newEntity(file->baseName(), file->filePath().split("file:///")[1], event->scenePos().x(), event->scenePos().y());
+}
+
+void Scene::emitNewSelection(){
+    emit selectedItemsChanged(selectedItems());
 }
 

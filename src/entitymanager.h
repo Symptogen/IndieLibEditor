@@ -15,6 +15,7 @@ public:
     void addEntity(GraphicalItem* graphic, EntityWidget* entityWidget);
     void addGraphicalItem(GraphicalItem* graphic);
     void addEntityWidgetToExistingEntity(int index, EntityWidget* entityWidget);
+    EntityWidget* findEntityWidgetWithGraphicalItem(GraphicalItem* item);
 
     inline QVector<GraphicalItem*> getGraphicalItemArray() const {return m_graphicalItemArray;}
     inline QVector<EntityWidget*> getEntityWidgetArray() const { return m_entityWidgetArray;}

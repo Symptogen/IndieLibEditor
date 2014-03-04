@@ -23,3 +23,13 @@ void EntityManager::addEntityWidgetToExistingEntity(int index, EntityWidget* ent
         entityWidget->init(m_graphicalItemArray[index]);
     }
 }
+
+EntityWidget* EntityManager::findEntityWidgetWithGraphicalItem(GraphicalItem *item){
+    EntityWidget* widget = NULL;
+    for(int i = 0; i < m_graphicalItemArray.size(); ++i){
+        if (m_graphicalItemArray[i] == item){
+            widget = m_entityWidgetArray[i];
+        }
+    }
+    return widget;
+}

@@ -23,8 +23,12 @@ public:
     void setBackground(QString path);
     void newEntity(QString name, QString path, int x=0, int y=0);
 
+public slots:
+    void emitNewSelection();
+
 signals:
     void newEntity();
+    void selectedItemsChanged(QList<QGraphicsItem *> items);
 
 public:
     virtual void dragEnterEvent ( QGraphicsSceneDragDropEvent * event );

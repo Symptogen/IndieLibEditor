@@ -30,22 +30,7 @@ PanelWidget::PanelWidget()
 
 //! This function is called when a project and a level have been created or opened
 void PanelWidget::init(){
-    //Initialise the widget with the already existing items if there are
-//    if (!m_scene->items().isEmpty()){
-//        for (int i = 0; i < m_scene->items().count(); ++i) {
 
-//            //Creates an entity panel
-//            if(m_scene->items().at(i)->type() == QGraphicsItem::UserType + 1){
-//                QWidget* widget = new EntityPanelWidget(qgraphicsitem_cast<GraphicalItem*>(m_scene->items().at(i)));
-//                this->m_entityStacked->addWidget(widget);
-//            }
-//            //creates a Background panel
-//            //else {
-//            //    QWidget* widget = new BackgroundPanelWidget(m_scene->items().at(i));
-//            //    this->m_entityStacked->addWidget(widget);
-//            //}
-//        }
-//    }
 }
 
 void PanelWidget::newEntityWidget(){
@@ -53,6 +38,16 @@ void PanelWidget::newEntityWidget(){
     m_entityWidgetStack->addWidget(widget);
     m_entityWidgetStack->setCurrentWidget(widget);
     EntityManager::getInstance()->addEntityWidgetToExistingEntity(EntityManager::getInstance()->getGraphicalItemArray().size() - 1, widget);
+}
+
+void PanelWidget::setCurrentSelectionWidget(QList<QGraphicsItem *> items){
+    if(items.isEmpty()){
+        //TODO creates an empty widget for empty selection
+    }else if(items.size() > 1){
+        //TODO creates an empty widget for multiple selection in waiting for proper multiple modification widget
+    }else{
+        m_entityWidgetStack->setCurrentWidget(EntityManager::getInstance()->findEntityWidgetWithGraphicalItem(dynamic_cast<GraphicalItem*>(items[0])));
+    }
 }
 
 
