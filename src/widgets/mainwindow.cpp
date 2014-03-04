@@ -55,10 +55,10 @@ void MainWindow::initDockWidgets(){
     m_hierarchyDock->setFeatures(QDockWidget::DockWidgetMovable | QDockWidget::DockWidgetClosable);
 
     //Element Dock Widget
-    m_elementPanel = new ElementPanel();
+    m_panelWidget = new PanelWidget();
     m_elementDock = new QDockWidget(this->tr("Element Panel"), this);
     m_elementDock->setAllowedAreas(Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea);
-    m_elementDock->setWidget(m_elementPanel);
+    m_elementDock->setWidget(m_panelWidget);
     m_elementDock->setFeatures(QDockWidget::DockWidgetMovable | QDockWidget::DockWidgetClosable);
 
     //Resources Browser Widget
@@ -116,7 +116,9 @@ void MainWindow::setFinalCreationStep(){
 
     //Scene creation and connection with the element panel
     m_scene = new Scene(m_project->getLayerList(), this);
-    m_elementPanel->setScene(m_scene);
+    m_panelWidget->init();
+
+    connect(m_scene, SIGNAL(newEntity()), m_panelWidget, SLOT(newEntityWidget()));
 
     //Window title
     setWindowTitle("Indielib Editor | " + m_project->getName() + " - " + m_project->getCurrentLevel());

@@ -1,12 +1,12 @@
 //! Part of the IndieLib Level Editor
-/*!\file entityelementpanel.h
+/*!\file entityWidget.h
  *\author Cecilia
  *\date 17-12-2013
  *\todo
 */
 
-#ifndef ENTITYELEMENTPANEL_H
-#define ENTITYELEMENTPANEL_H
+#ifndef ENTITYWIDGET_H
+#define ENTITYWIDGET_H
 
 #include <QWidget>
 #include <QLabel>
@@ -17,12 +17,12 @@
 #include <QGridLayout>
 #include "../graphic/graphicalitem.h"
 
-class EntityElementPanel : public QWidget
+class EntityWidget : public QWidget
 {
     Q_OBJECT
 public:
-    EntityElementPanel(GraphicalItem* item, QWidget *parent=0);
-    void init();
+    EntityWidget(QWidget *parent=0);
+    void init(GraphicalItem *item);
 
 private slots:
     void opacityAboutToChange(int newValue);
@@ -53,4 +53,4 @@ private:
 
 };
 
-#endif // ENTITYELEMENTPANEL_H
+#endif // ENTITYWIDGET_H

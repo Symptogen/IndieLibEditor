@@ -23,10 +23,8 @@ public:
     void setBackground(QString path);
     void newEntity(QString name, QString path, int x=0, int y=0);
 
-    QList<GraphicalItem*> getGraphicalItems() const {return m_graphicalItemList;}
 signals:
-    void newEntityAdded(GraphicalItem* item);
-
+    void newEntity();
 
 public:
     virtual void dragEnterEvent ( QGraphicsSceneDragDropEvent * event );
@@ -36,7 +34,6 @@ public:
 
 private:
     QHash<QString, QGraphicsItemGroup*> m_itemGroupsList;
-    QList<GraphicalItem*> m_graphicalItemList;
 
 
 };

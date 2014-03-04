@@ -1,23 +1,21 @@
 //! Part of the IndieLib Level Editor
-/*!\file entityelementpanel.cpp
+/*!\file entityWidget.cpp
  *\author Cecilia
  *\date 17-12-2013
  *\todo
 */
 
-#include "entityelementpanel.h"
+#include "entitywidget.h"
 #include <QLineEdit>
 #include <QDebug>
 
-EntityElementPanel::EntityElementPanel(GraphicalItem* item, QWidget* parent):
+EntityWidget::EntityWidget(QWidget* parent):
     QWidget(parent)
 {
-    m_entity = item;
-    this->init();
-    //this->setStyleSheet("background: #222222;");
 }
 
-void EntityElementPanel::init(){
+void EntityWidget::init(GraphicalItem* item){
+    m_entity = item;
 
     QVBoxLayout* layout = new QVBoxLayout();
 
@@ -137,6 +135,6 @@ void EntityElementPanel::init(){
 }
 
 //! Slot to connect the opacity slider and the Invoker
-void EntityElementPanel::opacityAboutToChange(int newValue){
+void EntityWidget::opacityAboutToChange(int newValue){
     m_entity->setOpacity(newValue*1.0/100.0);
 }

@@ -4,6 +4,7 @@
 #include <QDebug>
 #include <QInputDialog>
 #include "dialogs/newprojectdialog.h"
+#include "entitymanager.h"
 
 /**
 * @brief Application constructor.

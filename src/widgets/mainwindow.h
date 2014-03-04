@@ -15,7 +15,7 @@
 #include <QDockWidget>
 #include <QGraphicsView>
 #include <QMenu>
-#include "elementpanel.h"
+#include "panelwidget.h"
 #include "hierarchypanel.h"
 #include "../graphic/scene.h"
 #include "../project.h"
@@ -54,7 +54,7 @@ public:
     Scene* getScene() const {return m_scene;}
 
 private:
-    ElementPanel* m_elementPanel;
+    PanelWidget* m_panelWidget;
     HierarchyPanel* m_hierarchyPanel;
     QGraphicsView* m_viewer;
     Scene* m_scene;

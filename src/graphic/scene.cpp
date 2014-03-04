@@ -12,6 +12,7 @@
 #include <QDir>
 #include <QFileInfo>
 #include "scene.h"
+#include "../entitymanager.h"
 
 Scene::Scene(QStringList layerList, QObject *parent):
     QGraphicsScene(parent)
@@ -35,11 +36,12 @@ Scene::Scene(QStringList layerList, QObject *parent):
 
 //! Creates an entity and alert the panel to do so
 void Scene::newEntity(QString name, QString path, int x, int y){
-
     GraphicalItem* item = new GraphicalItem(name, path);
     item->setPos(x, y);
-    m_graphicalItemList.append(item);
     addItem(item);
+
+    EntityManager::getInstance()->addGraphicalItem(item);
+    emit newEntity();
 }
 
 //! TEMPORARY

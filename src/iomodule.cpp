@@ -4,6 +4,7 @@
 #include <QFileInfo>
 #include <QGraphicsItem>
 #include "widgets/mainwindow.h"
+#include "entitymanager.h"
 
 
 void IOModule::saveTileset(QString resourcesPath, QString savePath){
@@ -73,7 +74,7 @@ void IOModule::saveLevel(QString path, Scene* scene){
                     stream.writeStartElement("nodes");
 
                         //Retrieve all the items in a level
-                        QList<GraphicalItem*> items = scene->getGraphicalItems();
+                        QVector<GraphicalItem*> items = EntityManager::getInstance()->getGraphicalItemArray();
                         qDebug() << "iomodule " << items.count() ;
                         for (int i = 0; i<items.count(); ++i){
                             stream.writeStartElement("node");
